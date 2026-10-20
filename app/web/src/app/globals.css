@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #354438;
+  --color-forest-dark: #29372c;
+  --color-forest-active: #1f2a22;
+  --color-sage: #87977a;
+  --color-pale-sage: #dce4d5;
+  --color-pale-sage-hover: #cfd9c7;
+  --color-pale-sage-active: #c2ceb9;
+  --color-cream: #f7f5ef;
+  --color-cream-hover: #ece8df;
+  --color-surface: #ffffff;
+  --color-charcoal: #292c28;
+  --color-muted-gray: #65685f;
+  --color-warm-gray: #e5e2da;
+  --aspect-portrait: 4 / 5;
+}
+
+:root {
+  --background: var(--color-cream);
+  --foreground: var(--color-charcoal);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+.bg-ambient-dots {
+  background-image: radial-gradient(rgba(41, 44, 40, 0.075) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
