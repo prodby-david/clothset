@@ -1,0 +1,12 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+  - "app/*"
+
+onlyBuiltDependencies:
+  - "@prisma/client"
+  - "@prisma/engines"
+  - "esbuild"
+  - "prisma"
+  - "unrs-resolver"
+  - "workerd"

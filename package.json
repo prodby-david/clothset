@@ -1,0 +1,27 @@
+{
+  "name": "clothset",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "web:dev": "pnpm --filter web run dev",
+    "web:build": "pnpm --filter web run build",
+    "web:lint": "pnpm --filter web run lint",
+    "api:dev": "pnpm --filter api run dev",
+    "api:build": "pnpm --filter api run build",
+    "api:lint": "pnpm --filter api exec tsc --noEmit",
+    "shared:build": "node -e \"console.log('@clothset/shared-schemas is consumed directly as TypeScript (no build step needed)')\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.14.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.14.0",
+  "type": "module"
+}
