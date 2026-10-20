@@ -1,0 +1,133 @@
+// use prisma-8
+
+enum UserPlan {
+  @@type("pg/text@1")
+  FREE    = "FREE"
+  PREMIUM = "PREMIUM"
+}
+
+enum ClosetType {
+  @@type("pg/text@1")
+  EVERYDAY = "EVERYDAY"
+  WORK     = "WORK"
+  FORMAL   = "FORMAL"
+  SEASONAL = "SEASONAL"
+  CAPSULE  = "CAPSULE"
+  CUSTOM   = "CUSTOM"
+}
+
+enum ClothingCategory {
+  @@type("pg/text@1")
+  TOPS        = "TOPS"
+  BOTTOMS     = "BOTTOMS"
+  OUTERWEAR   = "OUTERWEAR"
+  DRESSES     = "DRESSES"
+  FOOTWEAR    = "FOOTWEAR"
+  ACCESSORIES = "ACCESSORIES"
+}
+
+enum OutfitSlot {
+  @@type("pg/text@1")
+  TOP       = "TOP"
+  BOTTOM    = "BOTTOM"
+  OUTERWEAR = "OUTERWEAR"
+  FOOTWEAR  = "FOOTWEAR"
+  ACCESSORY = "ACCESSORY"
+}
+
+model User {
+  id           String            @id @default(uuid())
+  email        String            @unique
+  passwordHash String?
+  name         String?
+  plan         UserPlan          @default(FREE)
+  provider     String?
+  providerId   String?
+  closets      Closet[]
+  clothes      ClothingItem[]
+  outfits      Outfit[]
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+
+  @@index([email])
+}
+
+model Closet {
+  id          String            @id @default(uuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  type        ClosetType        @default(EVERYDAY)
+  description String?
+  maxItems    Int               @default(50)
+  clothes     ClothingItem[]
+  outfits     Outfit[]
+  createdAt   TimestamptzString @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  @@index([userId])
+}
+
+model ClothingItem {
+  id           String            @id @default(uuid())
+  userId       String
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  closetId     String
+  closet       Closet            @relation(fields: [closetId], references: [id], onDelete: Cascade)
+  name         String
+  category     ClothingCategory
+  subcategory  String?
+  color        String?
+  brand        String?
+  material     String?
+  style        String?
+  seasons      String[]          @default([])
+  occasions    String[]          @default([])
+  description  String?
+  imageKey     String?
+  thumbnailKey String?
+  isFavorite   Boolean           @default(false)
+  isArchived   Boolean           @default(false)
+  aiSuggested  Boolean           @default(false)
+  isConfirmed  Boolean           @default(true)
+  aiMetadata   Json?
+  outfitItems  OutfitItem[]
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+
+  @@index([userId])
+  @@index([closetId])
+  @@index([category])
+}
+
+model Outfit {
+  id          String            @id @default(uuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  closetId    String?
+  closet      Closet?           @relation(fields: [closetId], references: [id], onDelete: SetNull)
+  name        String
+  occasion    String?
+  reason      String?
+  isSaved     Boolean           @default(false)
+  items       OutfitItem[]
+  createdAt   TimestamptzString @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  @@index([userId])
+  @@index([closetId])
+}
+
+model OutfitItem {
+  id             String            @id @default(uuid())
+  outfitId       String
+  outfit         Outfit            @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  clothingItemId String
+  clothingItem   ClothingItem      @relation(fields: [clothingItemId], references: [id], onDelete: Cascade)
+  slot           OutfitSlot        @default(TOP)
+  createdAt      TimestamptzString @default(now())
+
+  @@unique([outfitId, clothingItemId])
+  @@index([outfitId])
+  @@index([clothingItemId])
+}
