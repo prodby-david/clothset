@@ -24,6 +24,7 @@ Do not create a commit when the user only asks to review changes or suggest a me
 - Follow the git commit standards and conventions of the repository.
 - Understand the purpose of the changes before writing a message.
 - Follow the repository's existing commit message conventions.
+- Strictly ensure that the commit message and prefix use is strictly match on what the files changes has.
 - Use Conventional Commits when requested or when the project uses that convention.
 - Never include unrelated changes in a commit.
 - Never stage or commit secrets, credentials, or sensitive files.
