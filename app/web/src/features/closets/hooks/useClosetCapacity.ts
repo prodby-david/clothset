@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ClosetCapacityInfo } from "../types/closet.types";
+import type { ClosetCapacityInfo } from "../types/closet.types";
 
 const CAPACITY_LIMITS: Record<string, number> = {
   capsule: 35,

@@ -41,7 +41,7 @@ export default function ClothingCardImage({
         <button
           type="button"
           onClick={onDelete}
-          className="p-2 rounded-xl bg-surface/95 text-rose-600 shadow-xs hover:bg-rose-50 transition-colors cursor-pointer"
+          className="p-2 rounded-xl bg-surface/95 text-rose-600 dark:text-rose-400 shadow-xs hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
           aria-label="Delete clothing"
         >
           <Trash2 className="w-3.5 h-3.5" />

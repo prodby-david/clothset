@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-sand/20 animate-pulse" />}>
+    <Suspense fallback={<div className="min-h-screen bg-cream animate-pulse" />}>
       <DashboardView />
     </Suspense>
   );

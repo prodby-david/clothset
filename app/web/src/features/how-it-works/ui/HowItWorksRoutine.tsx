@@ -67,8 +67,8 @@ export default function HowItWorksRoutine({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-warm-gray">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <CalendarDays className="w-4 h-4 text-forest" />
-                    <span className="text-xs font-bold text-forest uppercase tracking-wider">
+                    <CalendarDays className="w-4 h-4 text-forest dark:text-sage" />
+                    <span className="text-xs font-bold text-forest dark:text-sage uppercase tracking-wider">
                       {currentRoutine.fullDay}
                     </span>
                   </div>
@@ -112,10 +112,10 @@ export default function HowItWorksRoutine({
 
               <div className="mt-8 pt-6 border-t border-warm-gray flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-muted-gray">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-forest" />
+                  <CheckCircle2 className="w-4 h-4 text-forest dark:text-sage" />
                   <span>All pieces pulled from your personal digitized wardrobe</span>
                 </div>
-                <div className="flex items-center gap-1.5 font-medium text-forest">
+                <div className="flex items-center gap-1.5 font-medium text-forest dark:text-sage">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>No new clothes required</span>
                 </div>

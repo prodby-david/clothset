@@ -1,7 +1,7 @@
 import { Folder, Pencil, Trash2, Plus } from "lucide-react";
 import Badge from "@/shared/components/ui/Badge";
 import Button from "@/shared/components/ui/Button";
-import { ClosetHeaderProps } from "../types/closet.types";
+import type { ClosetHeaderProps } from "../types/closet.types";
 
 export default function ClosetHeader({
   name,
@@ -18,7 +18,7 @@ export default function ClosetHeader({
     <div className="p-6 rounded-2xl bg-surface border border-warm-gray flex flex-col gap-5 shadow-xs">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-pale-sage text-forest flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center shrink-0 shadow-xs">
             <Folder className="w-6 h-6" />
           </div>
 
@@ -56,7 +56,7 @@ export default function ClosetHeader({
             size="sm"
             onClick={onDelete}
             aria-label="Delete closet"
-            className="text-rose-600 hover:bg-rose-50 p-2.5 sm:px-3 sm:py-2"
+            className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 p-2.5 sm:px-3 sm:py-2"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Delete</span>
@@ -86,7 +86,7 @@ export default function ClosetHeader({
           <div className="w-full sm:w-56 bg-pale-sage/60 rounded-full h-2 overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-300 ${
-                capacity.isNearLimit ? "bg-forest" : "bg-sage"
+                capacity.isNearLimit ? "bg-forest dark:bg-sage" : "bg-sage"
               }`}
               style={{ width: `${capacity.percentage}%` }}
             />

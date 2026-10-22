@@ -20,3 +20,8 @@ export async function getMeApi(): Promise<User> {
   const response = await apiClient.get<User>("/auth/me");
   return response.data;
 }
+
+export async function logoutApi(): Promise<{ success: boolean }> {
+  const response = await apiClient.post<{ success: boolean }>("/auth/logout");
+  return response.data;
+}

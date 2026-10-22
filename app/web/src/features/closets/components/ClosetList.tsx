@@ -45,9 +45,9 @@ export default function ClosetList({
     return (
       <EmptyState
         icon={<FolderPlus className="w-6 h-6" />}
-        title="No closets yet"
-        description="Organize your outfits by creating your first wardrobe closet."
-        actionLabel="Create Closet"
+        title="No wardrobes yet"
+        description="Organize your outfits by creating your first wardrobe."
+        actionLabel="Create Wardrobe"
         onAction={handleCreate}
       />
     );

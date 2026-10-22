@@ -1,47 +1,14 @@
 "use client";
 
-import { SunMedium, Maximize2, Scan, FolderPlus, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 import Badge from "@/shared/components/ui/Badge";
-import { HowItWorksDigitizeGuideProps } from "../types/how-it-works.types";
+import type { HowItWorksDigitizeGuideProps } from "../types/how-it-works.types";
+import { DIGITIZE_TIPS } from "../constants/how-it-works.constants";
 
 export default function HowItWorksDigitizeGuide({
   className = "",
 }: HowItWorksDigitizeGuideProps) {
-  const tips = [
-    {
-      number: "01",
-      icon: SunMedium,
-      title: "Natural Indirect Light",
-      description:
-        "Photograph near a window during daytime. Avoid harsh overhead tungsten lamps or direct flash to preserve true garment colors.",
-      tip: "Best time: Morning or early afternoon",
-    },
-    {
-      number: "02",
-      icon: Maximize2,
-      title: "Neutral Contrast Backdrop",
-      description:
-        "Place items against a neutral floor, bedspread, or hang against a plain wall. Clean contrast allows edge detection to isolate silhouettes flawlessly.",
-      tip: "Wooden hangers work wonderfully",
-    },
-    {
-      number: "03",
-      icon: Scan,
-      title: "Single Item per Frame",
-      description:
-        "Take one photo per garment. Avoid overlapping clothes or accessories in the same frame for the most accurate material parsing.",
-      tip: "Keep garments lightly smoothed out",
-    },
-    {
-      number: "04",
-      icon: FolderPlus,
-      title: "Instant Wardrobe Assignment",
-      description:
-        "Once scanned, assign pieces directly to work, weekend, or seasonal closets with a single tap to keep everything organized immediately.",
-      tip: "Organize as you upload",
-    },
-  ];
 
   return (
     <section className={`py-20 sm:py-28 bg-transparent border-b border-warm-gray ${className}`}>
@@ -66,7 +33,7 @@ export default function HowItWorksDigitizeGuide({
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tips.map((item, index) => {
+          {DIGITIZE_TIPS.map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
@@ -86,7 +53,7 @@ export default function HowItWorksDigitizeGuide({
                     <span className="text-xs font-mono font-bold text-muted-gray">
                       Step {item.number}
                     </span>
-                    <div className="w-8 h-8 rounded-lg bg-surface border border-warm-gray flex items-center justify-center text-forest shadow-xs">
+                    <div className="w-8 h-8 rounded-lg bg-surface border border-warm-gray flex items-center justify-center text-forest dark:text-sage shadow-xs">
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>

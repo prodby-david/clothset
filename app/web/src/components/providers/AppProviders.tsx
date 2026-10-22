@@ -1,8 +1,18 @@
 "use client";
 
-import { AuthProvider } from "@/features/auth/hooks/useAuth";
+import ThemeProvider from "./ThemeProvider";
+import { AuthProvider } from "@/features/auth/components/AuthProvider";
 import { AppProvidersProps } from "@/shared/types/ui.types";
 
 export default function AppProviders({ children }: AppProvidersProps) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <AuthProvider>{children}</AuthProvider>
+    </ThemeProvider>
+  );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { ClothingImageUploaderProps } from "../types/clothing.types";
+import type { ClothingImageUploaderProps } from "../types/clothing.types";
 
 export function useImageUpload({
   onImageChange,

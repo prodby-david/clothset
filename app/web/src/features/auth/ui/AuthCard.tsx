@@ -15,14 +15,14 @@ export default function AuthCard({
   const displayText = subtitle || description;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="w-full flex items-center justify-center p-3 sm:p-4 lg:p-6 my-auto">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
         className="w-full max-w-5xl bg-surface border border-warm-gray rounded-3xl shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-2"
       >
-        <div className="hidden lg:flex relative overflow-hidden flex-col justify-between p-8 xl:p-10 text-white min-h-[640px]">
+        <div className="hidden lg:flex relative overflow-hidden flex-col justify-between p-6 xl:p-8 text-white min-h-[460px]">
           <Image
             src="https://images.unsplash.com/photo-1558882224-dda166733046?auto=format&fit=crop&w=1200&q=80"
             alt="Serene minimalist wardrobe"
@@ -32,7 +32,7 @@ export default function AuthCard({
             className="object-cover"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/40 to-charcoal/50 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/55 z-10" />
 
           <div className="relative z-20">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest/80 backdrop-blur-md text-pale-sage text-xs font-semibold border border-white/15 shadow-xs">
@@ -54,29 +54,29 @@ export default function AuthCard({
           </div>
         </div>
 
-        <div className="p-6 sm:p-10 lg:p-12 flex flex-col justify-between min-h-[640px]">
+        <div className="p-5 sm:p-7 lg:p-8 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-3.5 sm:mb-4">
               <Link
                 href="/"
                 className="flex items-center gap-2.5 font-bold text-xl text-charcoal hover:opacity-90 transition-opacity"
               >
-                <div className="w-9 h-9 rounded-xl bg-forest text-white flex items-center justify-center shadow-xs">
+                <div className="w-8 h-8 rounded-xl bg-forest text-white flex items-center justify-center shadow-xs">
                   <Shirt className="w-4 h-4" />
                 </div>
                 <span>Clothset</span>
               </Link>
-              <span className="text-xs font-medium text-muted-gray uppercase tracking-wider">
+              <span className="text-[11px] font-medium text-muted-gray uppercase tracking-wider">
                 Digital Wardrobe
               </span>
             </div>
 
-            <div className="mb-6">
-              <h1 className="text-2xl font-bold tracking-tight text-charcoal">
+            <div className="mb-3.5 sm:mb-4">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-charcoal">
                 {title}
               </h1>
               {displayText && (
-                <p className="mt-1.5 text-sm text-muted-gray leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-muted-gray leading-relaxed">
                   {displayText}
                 </p>
               )}
@@ -85,8 +85,8 @@ export default function AuthCard({
             {children}
           </div>
 
-          <div className="pt-6 mt-8 border-t border-warm-gray flex items-center gap-2 text-xs text-muted-gray">
-            <ShieldCheck className="w-4 h-4 text-forest shrink-0" />
+          <div className="pt-3 mt-3 sm:mt-4 border-t border-warm-gray flex items-center gap-2 text-xs text-muted-gray">
+            <ShieldCheck className="w-4 h-4 text-forest dark:text-sage shrink-0" />
             <span>100% private wardrobe data • Zero speculative recommendations</span>
           </div>
         </div>

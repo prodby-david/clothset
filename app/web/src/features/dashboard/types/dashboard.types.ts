@@ -37,15 +37,23 @@ export interface DailyOutfit {
 export interface DailyOutfitSpotlightProps {
   activeOccasion: "work" | "casual" | "evening";
   onSelectOccasion: (occasion: "work" | "casual" | "evening") => void;
-  outfit: DailyOutfit;
+  outfit: DailyOutfit | null;
   onShuffle: () => void;
   isSaved: boolean;
   onToggleSave: () => void;
+  availablePieces?: {
+    tops: number;
+    bottoms: number;
+    footwear: number;
+  };
+  onAddGarment?: () => void;
 }
 
 export interface WardrobeInsightsProps {
   totalClosets: number;
   totalGarments: number;
+  garments?: RecentGarment[];
+  onAddGarment?: () => void;
 }
 
 export interface RecentGarment {
@@ -68,8 +76,11 @@ export interface DashboardClothingFormData {
   name: string;
   closetId: string;
   category: string;
+  subcategory?: string;
   color: string;
   season: string;
+  imageUrl?: string;
+  imageKey?: string;
 }
 
 export interface DashboardClothingModalProps {
@@ -87,6 +98,7 @@ export interface DashboardStatsProps {
 export interface DashboardSidebarProps {
   userEmail?: string | null;
   userName?: string | null;
+  userPlan?: string;
   onLogout: () => void;
   closets: Closet[];
   selectedWardrobeId: string;
@@ -106,12 +118,18 @@ export interface DashboardBottomNavProps {
 
 export interface DashboardOverviewTabProps {
   userName?: string | null;
+  userPlan?: string;
   totalClosets: number;
   totalGarments: number;
   planLimit?: number;
+  closets?: Closet[];
   onNavigateTab: (tab: DashboardTab, closetId?: string) => void;
   onCreateCloset: () => void;
   onAddGarment: () => void;
+  onSelectWardrobe?: (closetId: string) => void;
+  onEditCloset?: (closet: Closet) => void;
+  onDeleteCloset?: (closet: Closet) => void;
+  onAddGarmentToCloset?: (closetId: string) => void;
 }
 
 export interface DashboardClothesTabProps {
@@ -122,6 +140,7 @@ export interface DashboardClothesTabProps {
   onSelectCategory: (category: string) => void;
   garments: RecentGarment[];
   onAddNewGarment: () => void;
+  onDeleteGarment?: (id: string) => Promise<void> | void;
   onNavigateTab?: (tab: DashboardTab) => void;
 }
 

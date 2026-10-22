@@ -1,7 +1,7 @@
 import { Folder, CheckCircle2, Shirt } from "lucide-react";
 import { motion } from "motion/react";
 import Card from "@/shared/components/ui/Card";
-import { DashboardStatsProps } from "../types/dashboard.types";
+import type { DashboardStatsProps } from "../types/dashboard.types";
 
 export default function DashboardStats({
   totalClosets,
@@ -14,7 +14,7 @@ export default function DashboardStats({
         transition={{ duration: 0.15, ease: "easeOut" }}
       >
         <Card className="p-5 flex items-center gap-4 transition-colors hover:border-sage/50">
-          <div className="w-12 h-12 rounded-2xl bg-pale-sage text-forest flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center shrink-0 shadow-xs">
             <Folder className="w-5 h-5" />
           </div>
           <div>
@@ -33,7 +33,7 @@ export default function DashboardStats({
         transition={{ duration: 0.15, ease: "easeOut" }}
       >
         <Card className="p-5 flex items-center gap-4 transition-colors hover:border-sage/50">
-          <div className="w-12 h-12 rounded-2xl bg-sage/15 text-forest flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-sage/15 text-forest dark:text-sage flex items-center justify-center shrink-0 shadow-xs">
             <Shirt className="w-5 h-5" />
           </div>
           <div>
@@ -52,14 +52,14 @@ export default function DashboardStats({
         transition={{ duration: 0.15, ease: "easeOut" }}
       >
         <Card className="p-5 flex items-center gap-4 transition-colors hover:border-sage/50">
-          <div className="w-12 h-12 rounded-2xl bg-pale-sage/40 border border-warm-gray text-forest flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-pale-sage/40 border border-warm-gray text-forest dark:text-sage flex items-center justify-center shrink-0 shadow-xs">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div>
             <span className="text-xs text-muted-gray font-medium block">
               Wardrobe Status
             </span>
-            <span className="text-sm font-bold text-forest">
+            <span className="text-sm font-bold text-forest dark:text-sage">
               Minimalist & Ready
             </span>
           </div>

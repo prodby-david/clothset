@@ -11,7 +11,7 @@ export default function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center p-8 sm:p-14 text-center bg-surface/80 border border-dashed border-warm-gray rounded-2xl shadow-xs">
       {icon && (
-        <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-pale-sage text-forest mb-4 shadow-xs">
+        <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-pale-sage text-forest dark:text-sage mb-4 shadow-xs">
           {icon}
         </div>
       )}

@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useClosetDetails } from "./useClosetDetails";
 import { useClosetCapacity } from "./useClosetCapacity";
 import { useClothes } from "@/features/clothes/hooks/useClothes";
-import { CLOSET_TYPES, ClosetFormData } from "../types/closet.types";
-import { ClothingItem, ClothingFormData } from "@/features/clothes/types/clothing.types";
+import { CLOSET_TYPES, type ClosetFormData } from "../types/closet.types";
+import type { ClothingItem, ClothingFormData } from "@/features/clothes/types/clothing.types";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export function useClosetDetailView(closetId: string) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import {
+import type {
   ClothingItem,
   ClothingFormData,
   ClothingCategoryId,
@@ -12,179 +12,106 @@ import {
   createClothingApi,
   updateClothingApi,
   deleteClothingApi,
+  type ApiClothingItem,
+  type CreateClothingPayload,
 } from "../api/clothes.api";
+import { normalizeCategory, normalizeSeason } from "../lib/garment-store";
 
-const LOCAL_STORAGE_KEY_PREFIX = "clothset_clothes_cache_";
+function toClothingCategoryUpper(cat: string): CreateClothingPayload["category"] {
+  const norm = (cat || "").toLowerCase();
+  if (norm.startsWith("top") || norm.startsWith("shirt")) return "TOPS";
+  if (norm.startsWith("bottom") || norm.startsWith("pant") || norm.startsWith("trouser")) return "BOTTOMS";
+  if (norm.startsWith("outer") || norm.startsWith("jacket") || norm.startsWith("coat")) return "OUTERWEAR";
+  if (norm.startsWith("dress") || norm.startsWith("skirt")) return "DRESSES";
+  if (norm.startsWith("foot") || norm.startsWith("shoe") || norm.startsWith("boot")) return "FOOTWEAR";
+  if (norm.startsWith("access") || norm.startsWith("bag")) return "ACCESSORIES";
+  return "OTHER";
+}
 
-const sampleClothes: Record<string, ClothingItem[]> = {
-  cls_1: [
-    {
-      id: "clt_1",
-      closetId: "cls_1",
-      name: "Oversized Linen Shirt",
-      category: "tops",
-      color: "White",
-      season: "summer",
-      imageUrl: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "clt_2",
-      closetId: "cls_1",
-      name: "Pleated Relaxed Trousers",
-      category: "bottoms",
-      color: "Beige",
-      season: "all-season",
-      imageUrl: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "clt_3",
-      closetId: "cls_1",
-      name: "Minimalist Leather Loafers",
-      category: "footwear",
-      color: "Black",
-      season: "all-season",
-      imageUrl: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "clt_4",
-      closetId: "cls_1",
-      name: "Wool Blend Knit Sweater",
-      category: "tops",
-      color: "Sage Green",
-      season: "fall",
-      imageUrl: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-  ],
-  cls_2: [
-    {
-      id: "clt_5",
-      closetId: "cls_2",
-      name: "Single-Breasted Tailored Blazer",
-      category: "outerwear",
-      color: "Charcoal",
-      season: "all-season",
-      imageUrl: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "clt_6",
-      closetId: "cls_2",
-      name: "Crisp Poplin Button-Down",
-      category: "tops",
-      color: "White",
-      season: "all-season",
-      imageUrl: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80",
-      createdAt: new Date().toISOString(),
-    },
-  ],
-};
+function toClothingCategoryId(cat: string): ClothingCategoryId {
+  const norm = normalizeCategory(cat).toLowerCase();
+  if (norm === "bottoms") return "bottoms";
+  if (norm === "outerwear") return "outerwear";
+  if (norm === "footwear") return "footwear";
+  if (norm === "accessories") return "accessories";
+  return "tops";
+}
 
-function getStoredClothes(closetId: string): ClothingItem[] {
-  if (typeof window === "undefined" || !closetId) return [];
-  const storageKey = `${LOCAL_STORAGE_KEY_PREFIX}${closetId}`;
-  const raw = localStorage.getItem(storageKey);
-  if (!raw) {
-    const defaults = sampleClothes[closetId] || [];
-    localStorage.setItem(storageKey, JSON.stringify(defaults));
-    return defaults;
-  }
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
+function toClothingSeasonId(season: string): ClothingSeasonId {
+  const norm = normalizeSeason(season).toLowerCase();
+  if (norm.includes("spring")) return "spring";
+  if (norm.includes("summer")) return "summer";
+  if (norm.includes("autumn") || norm.includes("fall")) return "fall";
+  if (norm.includes("winter")) return "winter";
+  return "all-season";
+}
+
+function apiItemToClothingItem(item: ApiClothingItem): ClothingItem {
+  const norm = normalizeCategory(item.category);
+  return {
+    id: item.id,
+    closetId: item.closetId,
+    name: item.name,
+    category: toClothingCategoryId(norm),
+    color: item.color || "Neutral",
+    season: toClothingSeasonId(item.seasons?.[0] || "all-season"),
+    imageUrl: item.imageKey || item.thumbnailKey || undefined,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+  };
 }
 
 export function useClothes(closetId: string) {
-  const [clothes, setClothes] = useState<ClothingItem[]>(() =>
-    getStoredClothes(closetId)
-  );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [clothes, setClothes] = useState<ClothingItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [selectedCategory, setSelectedCategory] = useState<
-    ClothingCategoryId | "all"
-  >("all");
-  const [selectedSeason, setSelectedSeason] = useState<
-    ClothingSeasonId | "all"
-  >("all");
-
-  const storageKey = `${LOCAL_STORAGE_KEY_PREFIX}${closetId}`;
-
-  const setCachedItems = useCallback(
-    (items: ClothingItem[]) => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem(storageKey, JSON.stringify(items));
-      }
-      setClothes(items);
-    },
-    [storageKey]
-  );
+  const [selectedCategory, setSelectedCategory] = useState<ClothingCategoryId | "all">("all");
+  const [selectedSeason, setSelectedSeason] = useState<ClothingSeasonId | "all">("all");
 
   const fetchClothes = useCallback(async () => {
-    if (!closetId) return;
+    if (!closetId) {
+      setClothes([]);
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     setError(null);
     try {
       const data = await getClothesByClosetApi(closetId);
-      setClothes(data);
-      if (typeof window !== "undefined") {
-        localStorage.setItem(storageKey, JSON.stringify(data));
-      }
-    } catch {
-      setClothes(getStoredClothes(closetId));
+      setClothes(data.map(apiItemToClothingItem));
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to load clothes");
+      setClothes([]);
     } finally {
       setIsLoading(false);
     }
-  }, [closetId, storageKey]);
+  }, [closetId]);
 
   useEffect(() => {
-    if (!closetId) return;
-    let isMounted = true;
-    getClothesByClosetApi(closetId)
-      .then((data) => {
-        if (isMounted) {
-          setClothes(data);
-          if (typeof window !== "undefined") {
-            localStorage.setItem(storageKey, JSON.stringify(data));
-          }
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          setClothes(getStoredClothes(closetId));
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [closetId, storageKey]);
+    queueMicrotask(() => {
+      void fetchClothes();
+    });
+  }, [fetchClothes]);
 
   const addClothing = async (formData: ClothingFormData): Promise<ClothingItem> => {
     setError(null);
+    const catUpper = toClothingCategoryUpper(formData.category);
     try {
-      const created = await createClothingApi(closetId, formData);
-      setClothes((prev) => [created, ...prev]);
-      return created;
-    } catch {
-      const fallback: ClothingItem = {
-        id: `clt_${Date.now()}`,
-        closetId,
+      const created = await createClothingApi(closetId, {
         name: formData.name,
-        category: formData.category as ClothingCategoryId,
+        category: catUpper,
         color: formData.color,
-        season: formData.season as ClothingSeasonId,
-        imageUrl: formData.imageUrl,
-        createdAt: new Date().toISOString(),
-      };
-      const updated = [fallback, ...getStoredClothes(closetId)];
-      setCachedItems(updated);
-      return fallback;
+        seasons: [formData.season],
+        imageKey: formData.imageUrl,
+      });
+      const mapped = apiItemToClothingItem(created);
+      setClothes((prev) => [mapped, ...prev]);
+      return mapped;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to create clothing item";
+      setError(msg);
+      throw err;
     }
   };
 
@@ -193,29 +120,22 @@ export function useClothes(closetId: string) {
     formData: ClothingFormData
   ): Promise<ClothingItem> => {
     setError(null);
+    const catUpper = toClothingCategoryUpper(formData.category);
     try {
-      const updated = await updateClothingApi(clothingId, formData);
-      setClothes((prev) => prev.map((item) => (item.id === clothingId ? updated : item)));
-      return updated;
-    } catch {
-      const currentList = getStoredClothes(closetId);
-      const updatedList = currentList.map((item) =>
-        item.id === clothingId
-          ? {
-              ...item,
-              name: formData.name,
-              category: formData.category as ClothingCategoryId,
-              color: formData.color,
-              season: formData.season as ClothingSeasonId,
-              imageUrl: formData.imageUrl,
-              updatedAt: new Date().toISOString(),
-            }
-          : item
-      );
-      setCachedItems(updatedList);
-      const target = updatedList.find((i) => i.id === clothingId);
-      if (!target) throw new Error("Item not found");
-      return target;
+      const updated = await updateClothingApi(clothingId, {
+        name: formData.name,
+        category: catUpper,
+        color: formData.color,
+        seasons: [formData.season],
+        imageKey: formData.imageUrl,
+      });
+      const mapped = apiItemToClothingItem(updated);
+      setClothes((prev) => prev.map((item) => (item.id === clothingId ? mapped : item)));
+      return mapped;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to update clothing item";
+      setError(msg);
+      throw err;
     }
   };
 
@@ -224,9 +144,10 @@ export function useClothes(closetId: string) {
     try {
       await deleteClothingApi(clothingId);
       setClothes((prev) => prev.filter((item) => item.id !== clothingId));
-    } catch {
-      const updated = getStoredClothes(closetId).filter((item) => item.id !== clothingId);
-      setCachedItems(updated);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to delete clothing item";
+      setError(msg);
+      throw err;
     }
   };
 

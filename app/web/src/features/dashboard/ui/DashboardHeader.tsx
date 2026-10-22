@@ -2,7 +2,7 @@
 
 import { Plus, Sparkles, FolderPlus } from "lucide-react";
 import Button from "@/shared/components/ui/Button";
-import { DashboardHeaderProps } from "../types/dashboard.types";
+import type { DashboardHeaderProps } from "../types/dashboard.types";
 
 export default function DashboardHeader({
   userName,
@@ -20,7 +20,7 @@ export default function DashboardHeader({
           Welcome back{userName ? `, ${userName}` : ""}
         </h1>
         <p className="text-sm text-muted-gray mt-1 max-w-xl">
-          Curate your capsules, plan your daily styling, and discover new outfit combinations.
+          Curate your wardrobes, plan your daily styling, and discover new outfit combinations.
         </p>
       </div>
 
@@ -43,8 +43,8 @@ export default function DashboardHeader({
           onClick={onCreateCloset}
           className="gap-2 text-sm h-9 px-3.5"
         >
-          <FolderPlus className="w-4 h-4 text-forest" />
-          <span>New Closet</span>
+          <FolderPlus className="w-4 h-4 text-forest dark:text-sage" />
+          <span>New Wardrobe</span>
         </Button>
 
         {onAddGarment && (

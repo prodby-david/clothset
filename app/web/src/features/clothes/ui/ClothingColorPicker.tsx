@@ -1,5 +1,5 @@
 import Input from "@/shared/components/ui/Input";
-import { DEFAULT_COLORS, ClothingColorPickerProps } from "../types/clothing.types";
+import { DEFAULT_COLORS, type ClothingColorPickerProps } from "../types/clothing.types";
 
 export default function ClothingColorPicker({
   value,

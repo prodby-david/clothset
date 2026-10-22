@@ -7,7 +7,7 @@ import Input from "@/shared/components/ui/Input";
 import Textarea from "@/shared/components/ui/Textarea";
 import Button from "@/shared/components/ui/Button";
 import ClosetTypeSelector from "./ClosetTypeSelector";
-import { ClosetFormModalProps } from "../types/closet.types";
+import type { ClosetFormModalProps } from "../types/closet.types";
 import { useClosetForm } from "../hooks/useClosetForm";
 
 export default function ClosetFormModal(props: ClosetFormModalProps) {
@@ -28,10 +28,10 @@ export default function ClosetFormModal(props: ClosetFormModalProps) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={isEditing ? "Edit Wardrobe Closet" : "Create New Closet"}
+      title={isEditing ? "Edit Wardrobe" : "Create New Wardrobe"}
       description={
         isEditing
-          ? "Update details, type, or capacity for this closet collection."
+          ? "Update details, type, or capacity for this wardrobe."
           : "Choose a wardrobe type and configure maximum capacity to organize your collection."
       }
       maxWidth="lg"
@@ -52,7 +52,7 @@ export default function ClosetFormModal(props: ClosetFormModalProps) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
             <Input
-              label="Closet Name"
+              label="Wardrobe Name"
               placeholder="e.g. Summer Outfits or Work Essentials"
               error={errors.name?.message}
               {...register("name")}
@@ -79,11 +79,11 @@ export default function ClosetFormModal(props: ClosetFormModalProps) {
         />
 
         <div className="p-3.5 rounded-xl bg-pale-sage/40 border border-pale-sage flex items-start gap-2.5">
-          <Sparkles className="w-4 h-4 text-forest shrink-0 mt-0.5" />
+          <Sparkles className="w-4 h-4 text-forest dark:text-sage shrink-0 mt-0.5" />
           <div className="text-xs text-charcoal">
-            <span className="font-semibold block text-forest">Capsule Capacity Rules</span>
+            <span className="font-semibold block text-forest dark:text-sage">Wardrobe Capacity Rules</span>
             <span className="text-muted-gray leading-relaxed">
-              Clothset uses your selected closet limit to balance rotation frequency and recommend high-utility pieces.
+              Clothset uses your selected wardrobe limit to balance rotation frequency and recommend high-utility pieces.
             </span>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function ClosetFormModal(props: ClosetFormModalProps) {
             size="sm"
             isLoading={isSubmitting}
           >
-            {isEditing ? "Save Changes" : "Create Closet"}
+            {isEditing ? "Save Changes" : "Create Wardrobe"}
           </Button>
         </div>
       </form>

@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { Shirt, Menu, X } from "lucide-react";
 import Button from "@/shared/components/ui/Button";
+import ThemeToggle from "@/shared/components/ui/ThemeToggle";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { LandingHeaderProps } from "../types/landing.types";
 import { useLandingNav } from "../hooks/useLandingNav";
 
 export default function LandingHeader({ className = "" }: LandingHeaderProps) {
+  const { user } = useAuth();
   const {
     mobileMenuOpen,
     toggleMenu,
@@ -28,7 +31,7 @@ export default function LandingHeader({ className = "" }: LandingHeaderProps) {
           <div className="w-8 h-8 rounded-xl bg-forest text-white flex items-center justify-center shadow-xs">
             <Shirt className="w-4 h-4" />
           </div>
-          <span>Clothset</span>
+          <span className="text-lg font-bold tracking-tight">Clothset</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
@@ -50,26 +53,41 @@ export default function LandingHeader({ className = "" }: LandingHeaderProps) {
         </nav>
 
         <div className="hidden md:flex items-center gap-2.5">
-          <Link href="/sign-in">
-            <Button variant="ghost" size="sm" className="text-sm h-9 px-3.5">
-              Sign in
-            </Button>
-          </Link>
-          <Link href="/sign-up">
-            <Button variant="primary" size="sm" className="text-sm h-9 px-4 shadow-xs">
-              Get Started
-            </Button>
-          </Link>
+          <ThemeToggle />
+          {user ? (
+            <Link href="/dashboard">
+              <Button variant="primary" size="sm" className="text-sm h-9 px-4 shadow-xs">
+                Go to Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/sign-in"
+                className="text-sm font-medium text-muted-gray hover:text-charcoal px-2 py-1.5 transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link href="/sign-up">
+                <Button variant="primary" size="sm" className="text-sm h-9 px-4 shadow-xs">
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
 
-        <button
-          type="button"
-          onClick={toggleMenu}
-          className="md:hidden p-1.5 text-charcoal hover:bg-cream rounded-xl border border-warm-gray transition-colors cursor-pointer"
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={toggleMenu}
+            className="p-1.5 text-charcoal hover:bg-cream rounded-xl border border-warm-gray transition-colors cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {mobileMenuOpen && (
@@ -111,17 +129,29 @@ export default function LandingHeader({ className = "" }: LandingHeaderProps) {
               FAQ
             </Link>
           </nav>
-          <div className="flex flex-col gap-2 pt-2 border-t border-warm-gray">
-            <Link href="/sign-in" onClick={closeMenu}>
-              <Button variant="outline" size="sm" className="w-full justify-center text-sm h-9">
-                Sign in
-              </Button>
-            </Link>
-            <Link href="/sign-up" onClick={closeMenu}>
-              <Button variant="primary" size="sm" className="w-full justify-center text-sm h-9">
-                Get Started
-              </Button>
-            </Link>
+          <div className="pt-2 border-t border-warm-gray flex flex-col gap-2">
+            {user ? (
+              <Link href="/dashboard" onClick={closeMenu}>
+                <Button variant="primary" size="sm" className="w-full justify-center text-sm h-9">
+                  Go to Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/sign-in"
+                  onClick={closeMenu}
+                  className="w-full text-center py-2 text-sm font-medium text-muted-gray hover:text-charcoal transition-colors"
+                >
+                  Sign in
+                </Link>
+                <Link href="/sign-up" onClick={closeMenu}>
+                  <Button variant="primary" size="sm" className="w-full justify-center text-sm h-9">
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}

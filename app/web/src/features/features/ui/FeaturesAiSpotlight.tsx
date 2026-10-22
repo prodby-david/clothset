@@ -1,47 +1,14 @@
 "use client";
 
-import { Eye, Palette, Scissors, Sparkles, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 import Badge from "@/shared/components/ui/Badge";
-import { FeaturesAiSpotlightProps } from "../types/features.types";
+import type { FeaturesAiSpotlightProps } from "../types/features.types";
+import { SCANNER_STEPS } from "../constants/features.constants";
 
 export default function FeaturesAiSpotlight({
   className = "",
 }: FeaturesAiSpotlightProps) {
-  const steps = [
-    {
-      step: "01",
-      icon: Eye,
-      title: "Automatic Background Removal",
-      description:
-        "Isolates the clothing piece from background shadows, keeping photos crisp and focused on the garment.",
-      badge: "Clean Cutout",
-    },
-    {
-      step: "02",
-      icon: Palette,
-      title: "Color & Tone Detection",
-      description:
-        "Analyzes exact garment tones and colors to determine how well they match with other clothes in your collection.",
-      badge: "Color Matching",
-    },
-    {
-      step: "03",
-      icon: Scissors,
-      title: "Fabric & Fit Detection",
-      description:
-        "Recognizes texture, drape, and occasion classification—from casual cotton to tailored wool.",
-      badge: "Material Details",
-    },
-    {
-      step: "04",
-      icon: Sparkles,
-      title: "Smart Outfit Matching",
-      description:
-        "Checks your own digital wardrobe to suggest coordinated combinations without ever inventing clothes you do not have.",
-      badge: "Real Clothes Only",
-    },
-  ];
 
   return (
     <section className={`py-20 sm:py-28 bg-transparent border-b border-warm-gray ${className}`}>
@@ -66,7 +33,7 @@ export default function FeaturesAiSpotlight({
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((item, index) => {
+          {SCANNER_STEPS.map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
@@ -89,7 +56,7 @@ export default function FeaturesAiSpotlight({
                     <Badge variant="neutral">{item.badge}</Badge>
                   </div>
 
-                  <div className="w-10 h-10 rounded-xl bg-pale-sage text-forest flex items-center justify-center mb-4 shadow-xs">
+                  <div className="w-10 h-10 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center mb-4 shadow-xs">
                     <Icon className="w-5 h-5" />
                   </div>
 
@@ -101,7 +68,7 @@ export default function FeaturesAiSpotlight({
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-warm-gray flex items-center gap-1.5 text-xs text-forest font-medium">
+                <div className="mt-6 pt-4 border-t border-warm-gray flex items-center gap-1.5 text-xs text-forest dark:text-sage font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Verified Output</span>
                 </div>

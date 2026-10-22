@@ -19,7 +19,7 @@ export interface FaqSupportBannerProps {
 export const CONTACT_TOPIC_OPTIONS = [
   { value: "general", label: "General Inquiry" },
   { value: "wardrobe-uploads", label: "Wardrobe Photo Uploads" },
-  { value: "capsule-rules", label: "Capsule Wardrobe Rules" },
+  { value: "capsule-rules", label: "Wardrobe Rules & Tips" },
   { value: "ai-styling", label: "AI Styling & Suggestions" },
   { value: "privacy-security", label: "Privacy & Image Security" },
   { value: "billing-plans", label: "Plan Upgrades & Billing" },

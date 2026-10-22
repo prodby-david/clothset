@@ -1,59 +1,11 @@
-import { z } from "zod";
+import type { z } from "zod";
+import { CLOSET_TYPES } from "../constants/closet.constants";
+import { closetSchema } from "../schemas/closet.schema";
 
-export const CLOSET_TYPES = [
-  {
-    id: "capsule",
-    title: "Capsule Wardrobe",
-    description: "Curated minimalist collection of versatile interchangeable pieces",
-    icon: "layers",
-    defaultMaxSize: 30,
-  },
-  {
-    id: "work",
-    title: "Work / Office",
-    description: "Professional attire, blazers, and smart tailored pieces",
-    icon: "briefcase",
-    defaultMaxSize: 40,
-  },
-  {
-    id: "everyday",
-    title: "Everyday / Casual",
-    description: "Daily comfort wear, denim, and weekend essentials",
-    icon: "shirt",
-    defaultMaxSize: 50,
-  },
-  {
-    id: "formal",
-    title: "Formal / Evening",
-    description: "Evening wear, suits, dresses, and special event pieces",
-    icon: "award",
-    defaultMaxSize: 25,
-  },
-  {
-    id: "seasonal",
-    title: "Seasonal Rotation",
-    description: "Summer linen, winter coats, and transitional outerwear",
-    icon: "sun-snow",
-    defaultMaxSize: 60,
-  },
-  {
-    id: "custom",
-    title: "Custom Closet",
-    description: "Personalized wardrobe capsule with custom capacity",
-    icon: "folder",
-    defaultMaxSize: 75,
-  },
-] as const;
+export { CLOSET_TYPES };
+export { closetSchema };
 
 export type ClosetTypeId = (typeof CLOSET_TYPES)[number]["id"];
-
-export const closetSchema = z.object({
-  type: z.string().min(1, "Please select a closet type"),
-  name: z.string().min(2, "Closet name must be at least 2 characters"),
-  description: z.string().optional(),
-  maxSize: z.number().min(5).max(300).optional(),
-});
-
 export type ClosetFormData = z.infer<typeof closetSchema>;
 
 export interface Closet {
@@ -62,9 +14,31 @@ export interface Closet {
   type: string;
   description?: string;
   clothesCount?: number;
+  maxItems?: number;
   maxSize?: number;
+  templateId?: string | null;
   createdAt: string;
   updatedAt?: string;
+}
+
+export interface WardrobeTemplateItem {
+  id: string;
+  name: string;
+  description?: string | null;
+  type: string;
+  minTier: "FREE" | "PLUS" | "ELITE";
+  isEligible?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface WardrobeTemplateCatalogModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onActivate: (templateId: string) => Promise<void>;
+  userPlan?: string;
+  closets: Closet[];
+  maxClosets: number;
 }
 
 export interface ClosetCardHeaderProps {
@@ -78,6 +52,7 @@ export interface ClosetCardFooterProps {
   clothesCount?: number;
   maxSize?: number;
   onSelect?: (closetId: string) => void;
+  onAddGarment?: (closetId: string) => void;
 }
 
 export interface ClosetCardProps {
@@ -85,6 +60,7 @@ export interface ClosetCardProps {
   onEdit: (closet: Closet) => void;
   onDelete: (closet: Closet) => void;
   onSelect?: (closetId: string) => void;
+  onAddGarment?: (closetId: string) => void;
 }
 
 export interface ClosetTypeSelectorProps {

@@ -2,7 +2,7 @@ import { Shirt } from "lucide-react";
 import { motion } from "motion/react";
 import ClothingCard from "../ui/ClothingCard";
 import EmptyState from "@/shared/components/ui/EmptyState";
-import { ClothingGridProps } from "../types/clothing.types";
+import type { ClothingGridProps } from "../types/clothing.types";
 
 export default function ClothingGrid({
   clothes,

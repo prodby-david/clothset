@@ -1,5 +1,5 @@
 import {
-  ClothingItem,
+  type ClothingItem,
   CLOTHING_CATEGORIES,
   CLOTHING_SEASONS,
 } from "../types/clothing.types";

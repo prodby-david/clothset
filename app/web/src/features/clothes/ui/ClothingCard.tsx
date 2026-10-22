@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import Card from "@/shared/components/ui/Card";
 import ClothingCardImage from "./ClothingCardImage";
 import ClothingCardDetails from "./ClothingCardDetails";
-import { ClothingCardProps } from "../types/clothing.types";
+import type { ClothingCardProps } from "../types/clothing.types";
 import { useClothingCard } from "../hooks/useClothingCard";
 
 export default function ClothingCard({

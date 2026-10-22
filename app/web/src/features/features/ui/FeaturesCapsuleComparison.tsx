@@ -5,26 +5,15 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import Badge from "@/shared/components/ui/Badge";
 import Button from "@/shared/components/ui/Button";
-import { FeaturesCapsuleComparisonProps } from "../types/features.types";
+import type { FeaturesCapsuleComparisonProps } from "../types/features.types";
+import {
+  CHAOTIC_POINTS,
+  CAPSULE_POINTS,
+} from "../constants/features.constants";
 
 export default function FeaturesCapsuleComparison({
   className = "",
 }: FeaturesCapsuleComparisonProps) {
-  const chaoticPoints = [
-    "80% of items sit unworn and forgotten in deep closets",
-    "Persistent morning decision fatigue and rushed outfit choices",
-    "Impulse purchases that fail to match existing pieces",
-    "Cluttered storage with duplicate basics and mismatched colors",
-    "Uncertainty about weather suitability and occasion etiquette",
-  ];
-
-  const capsulePoints = [
-    "Every piece is intentionally curated and regularly rotated",
-    "Morning outfit selection resolved effortlessly in 30 seconds",
-    "Harmonious palettes where nearly every top pairs with every bottom",
-    "Maximized versatility—15 core garments generate 30+ unique looks",
-    "Grounded recommendations powered by verified items you own",
-  ];
 
   return (
     <section className={`py-20 sm:py-28 bg-transparent border-b border-warm-gray ${className}`}>
@@ -39,11 +28,11 @@ export default function FeaturesCapsuleComparison({
           <Badge variant="accent" className="mb-3">
             Wardrobe Organization
           </Badge>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-charcoal">
-            The difference between a messy closet and an organized wardrobe
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-charcoal">
+            Chaotic Physical Closet vs. Intentional Digital Wardrobe
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-muted-gray leading-relaxed max-w-xl mx-auto">
-            Clothset helps you turn a chaotic closet into an organized wardrobe you love.
+          <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-xl mx-auto">
+            Clothset transforms messy, overwhelmed closets into neatly partitioned digital wardrobes with capacity tracking and quick category filtering.
           </p>
         </motion.div>
 
@@ -53,31 +42,30 @@ export default function FeaturesCapsuleComparison({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="rounded-3xl border border-warm-gray bg-cream/30 p-8 flex flex-col justify-between"
+            className="rounded-3xl border border-warm-gray bg-surface p-8 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-6">
                 <span className="text-xs font-semibold text-muted-gray uppercase tracking-wider">
                   Traditional Approach
                 </span>
-                <span className="px-2.5 py-1 rounded-lg bg-rose-100/60 text-rose-700 text-xs font-medium">
+                <span className="px-2.5 py-1 rounded-lg bg-rose-100/60 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-xs font-medium">
                   Chaotic & Overwhelming
                 </span>
               </div>
 
               <h3 className="text-xl font-bold text-charcoal">
-                The Overstuffed Wardrobe
+                The Chaotic Physical Closet
               </h3>
               <p className="mt-2 text-sm text-muted-gray leading-relaxed">
-                Full closets with nothing to wear. Buying more pieces only adds friction
-                instead of solving daily dressing dilemmas.
+                Full closets with nothing to wear. Buying more pieces only adds friction instead of solving daily dressing dilemmas.
               </p>
 
               <div className="mt-8 space-y-4">
-                {chaoticPoints.map((point) => (
+                {CHAOTIC_POINTS.map((point) => (
                   <div key={point} className="flex items-start gap-3">
                     <XCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-                    <span className="text-sm text-charcoal/80 leading-snug">
+                    <span className="text-sm text-charcoal leading-snug">
                       {point}
                     </span>
                   </div>
@@ -99,24 +87,23 @@ export default function FeaturesCapsuleComparison({
           >
             <div>
               <div className="flex items-center justify-between mb-6">
-                <span className="text-xs font-semibold text-forest uppercase tracking-wider">
+                <span className="text-xs font-semibold text-forest dark:text-sage uppercase tracking-wider">
                   Clothset Method
                 </span>
                 <Badge variant="accent">Intentional & Streamlined</Badge>
               </div>
 
               <h3 className="text-xl font-bold text-charcoal">
-                The Organized Digital Wardrobe
+                The Intentional Digital Wardrobe
               </h3>
               <p className="mt-2 text-sm text-muted-gray leading-relaxed">
-                Your clothes organized online and ready to mix and match. Complete
-                outfit confidence every morning with zero stress.
+                Your wardrobe structured into distinct collections, with clear category filtering and subscription-based capacity limits.
               </p>
 
               <div className="mt-8 space-y-4">
-                {capsulePoints.map((point) => (
+                {CAPSULE_POINTS.map((point) => (
                   <div key={point} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-forest shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-forest dark:text-sage shrink-0 mt-0.5" />
                     <span className="text-sm text-charcoal font-medium leading-snug">
                       {point}
                     </span>
@@ -126,7 +113,7 @@ export default function FeaturesCapsuleComparison({
             </div>
 
             <div className="mt-8 pt-6 border-t border-warm-gray flex items-center justify-between">
-              <span className="text-xs text-forest font-semibold">
+              <span className="text-xs text-forest dark:text-sage font-semibold">
                 Average decision time: &lt; 30 seconds
               </span>
               <Link href="/sign-up">

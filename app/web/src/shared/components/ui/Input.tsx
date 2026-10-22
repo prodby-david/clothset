@@ -32,15 +32,15 @@ export default function Input({
         <input
           id={inputId}
           ref={ref}
-          className={`h-11 px-3.5 bg-surface border rounded-xl text-sm text-charcoal placeholder:text-muted-gray/60 transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent disabled:bg-cream disabled:cursor-not-allowed shadow-xs w-full ${
-            rightElement ? "pr-11" : ""
+          className={`h-10 px-3.5 bg-surface dark:bg-[#18201a] border rounded-xl text-sm text-charcoal placeholder:text-muted-gray/60 transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent disabled:bg-cream disabled:cursor-not-allowed shadow-xs w-full ${
+            rightElement ? "pr-10" : ""
           } ${
             error ? "border-rose-400 focus:ring-rose-400" : "border-warm-gray"
           } ${className}`}
           {...inputDomProps}
         />
         {rightElement && (
-          <div className="absolute right-0 top-0 h-11 px-3 flex items-center justify-center">
+          <div className="absolute right-0 top-0 h-10 px-3 flex items-center justify-center">
             {rightElement}
           </div>
         )}

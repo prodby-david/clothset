@@ -34,7 +34,7 @@ export default function FaqContactForm(props: FaqContactFormProps) {
       <div
         className={`bg-surface border border-warm-gray rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col items-center text-center ${className}`}
       >
-        <div className="w-12 h-12 rounded-full bg-pale-sage text-forest flex items-center justify-center mb-4">
+        <div className="w-12 h-12 rounded-full bg-pale-sage text-forest dark:text-sage flex items-center justify-center mb-4">
           <CheckCircle2 className="w-6 h-6" />
         </div>
         <h3 className="text-lg font-bold text-charcoal">
@@ -78,7 +78,7 @@ export default function FaqContactForm(props: FaqContactFormProps) {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         {errorMessage && (
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMessage}</span>
           </div>

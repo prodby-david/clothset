@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogOut, Shirt } from "lucide-react";
 import Button from "./Button";
+import ThemeToggle from "./ThemeToggle";
 import { NavbarProps } from "@/shared/types/ui.types";
 
 export default function Navbar({ userEmail, onLogout }: NavbarProps) {
@@ -17,7 +18,8 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
           <span className="text-lg font-bold tracking-tight">Clothset</span>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <ThemeToggle />
           {userEmail ? (
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-muted-gray bg-surface/90 px-3 py-1 rounded-full border border-warm-gray shadow-xs">
@@ -27,7 +29,7 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
                 variant="ghost"
                 size="sm"
                 onClick={onLogout}
-                className="text-muted-gray hover:text-rose-600 gap-1.5"
+                className="text-muted-gray hover:text-rose-600 dark:hover:text-rose-400 gap-1.5"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:inline">Sign out</span>
@@ -35,11 +37,6 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <Link href="/sign-in">
-                <Button variant="ghost" size="sm">
-                  Sign in
-                </Button>
-              </Link>
               <Link href="/sign-up">
                 <Button variant="primary" size="sm">
                   Sign up

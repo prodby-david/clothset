@@ -10,7 +10,7 @@ import ClosetFormModal from "../ui/ClosetFormModal";
 import ClothingFilterBar from "@/features/clothes/ui/ClothingFilterBar";
 import ClothingGrid from "@/features/clothes/components/ClothingGrid";
 import ClothingFormModal from "@/features/clothes/components/ClothingFormModal";
-import { ClosetDetailViewProps } from "../types/closet.types";
+import type { ClosetDetailViewProps } from "../types/closet.types";
 import { useClosetDetailView } from "../hooks/useClosetDetailView";
 
 export default function ClosetDetailView({ closetId }: ClosetDetailViewProps) {
@@ -45,7 +45,7 @@ export default function ClosetDetailView({ closetId }: ClosetDetailViewProps) {
   } = useClosetDetailView(closetId);
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream">
+    <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <Navbar userEmail={user?.email || "Guest"} onLogout={logout} />
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">

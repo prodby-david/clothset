@@ -10,37 +10,20 @@ import {
   Edit2,
   Trash2,
   ExternalLink,
-  Layers,
-  Briefcase,
-  Award,
-  SunSnow,
-  Folder,
 } from "lucide-react";
 import Card from "@/shared/components/ui/Card";
 import Badge from "@/shared/components/ui/Badge";
 import Button from "@/shared/components/ui/Button";
-import { Closet } from "@/features/closets/types/closet.types";
-import {
+import type { Closet } from "@/features/closets/types/closet.types";
+import type {
   RecentGarment,
   WardrobeClothesExplorerProps,
 } from "../types/dashboard.types";
 
-const TYPE_ICONS: Record<string, React.ElementType> = {
-  capsule: Layers,
-  work: Briefcase,
-  everyday: Shirt,
-  formal: Award,
-  seasonal: SunSnow,
-  custom: Folder,
-};
-
-const CATEGORIES = [
-  { id: "all", label: "All Pieces" },
-  { id: "Tops", label: "Tops" },
-  { id: "Bottoms", label: "Bottoms" },
-  { id: "Outerwear", label: "Outerwear" },
-  { id: "Footwear", label: "Footwear" },
-];
+import {
+  CLOSET_TYPE_ICONS,
+  DASHBOARD_CATEGORIES,
+} from "../constants/dashboard.constants";
 
 export default function WardrobeClothesExplorer({
   closets,
@@ -57,7 +40,7 @@ export default function WardrobeClothesExplorer({
   const isAll = selectedWardrobeId === "all";
 
   const getWardrobeIcon = (type?: string) => {
-    const Icon = (type && TYPE_ICONS[type]) || Shirt;
+    const Icon = (type && CLOSET_TYPE_ICONS[type]) || Shirt;
     return <Icon className="w-4 h-4 shrink-0" />;
   };
 
@@ -149,13 +132,13 @@ export default function WardrobeClothesExplorer({
       <Card className="p-5 sm:p-6 border border-warm-gray bg-surface shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-warm-gray">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-pale-sage text-forest flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-10 h-10 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center shrink-0 shadow-xs">
               {getWardrobeIcon(currentCloset?.type)}
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-charcoal">
-                  {isAll ? "All Wardrobe Capsules" : currentCloset?.name}
+                  {isAll ? "All Wardrobe Pieces" : currentCloset?.name}
                 </h3>
                 {!isAll && currentCloset && (
                   <Badge variant="accent" className="capitalize text-xs">
@@ -165,8 +148,8 @@ export default function WardrobeClothesExplorer({
               </div>
               <p className="text-sm text-muted-gray mt-0.5 max-w-xl">
                 {isAll
-                  ? "Viewing all stored clothing pieces across your custom capsules and seasonal wardrobes."
-                  : currentCloset?.description || "Curated wardrobe capsule pieces."}
+                  ? "Viewing all stored clothing pieces across your custom wardrobes."
+                  : currentCloset?.description || "Curated wardrobe pieces."}
               </p>
             </div>
           </div>
@@ -179,9 +162,9 @@ export default function WardrobeClothesExplorer({
                   {currentCount} / {currentMax} ({capacityPct}%)
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full bg-sand overflow-hidden">
+              <div className="w-full h-2 rounded-full bg-warm-gray/40 dark:bg-[#252f27] overflow-hidden">
                 <div
-                  className="h-full bg-deep-sage rounded-full transition-all duration-300"
+                  className="h-full bg-forest dark:bg-sage rounded-full transition-all duration-300"
                   style={{ width: `${capacityPct}%` }}
                 />
               </div>
@@ -225,7 +208,7 @@ export default function WardrobeClothesExplorer({
         <div className="pt-4 flex flex-col gap-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-1.5 overflow-x-auto">
-              {CATEGORIES.map((cat) => (
+              {DASHBOARD_CATEGORIES.map((cat) => (
                 <button
                   key={cat.id}
                   type="button"
@@ -233,7 +216,7 @@ export default function WardrobeClothesExplorer({
                   className={`px-3 py-1 rounded-xl text-xs font-medium transition-colors cursor-pointer shrink-0 ${
                     selectedCategory === cat.id
                       ? "bg-forest text-white shadow-xs"
-                      : "bg-cream text-charcoal hover:bg-warm-gray/60"
+                      : "bg-warm-gray/30 dark:bg-[#151a16] text-charcoal hover:bg-pale-sage/30 dark:hover:bg-[#243026]"
                   }`}
                 >
                   {cat.label}
@@ -247,8 +230,8 @@ export default function WardrobeClothesExplorer({
           </div>
 
           {garments.length === 0 ? (
-            <div className="py-12 px-4 rounded-2xl border-2 border-dashed border-warm-gray bg-cream/30 text-center flex flex-col items-center justify-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-cream border border-warm-gray flex items-center justify-center text-sage">
+            <div className="py-12 px-4 rounded-2xl border-2 border-dashed border-warm-gray bg-cream/30 dark:bg-[#151a16] text-center flex flex-col items-center justify-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-cream/50 dark:bg-[#1c231e] border border-warm-gray flex items-center justify-center text-sage">
                 <Shirt className="w-6 h-6" />
               </div>
               <div>
@@ -283,7 +266,7 @@ export default function WardrobeClothesExplorer({
                 >
                   <Card className="p-3 h-full flex flex-col justify-between border border-warm-gray bg-surface hover:border-sage/60 hover:shadow-md transition-all group">
                     <div>
-                      <div className="relative aspect-square w-full rounded-xl bg-cream border border-warm-gray/60 overflow-hidden mb-3 group-hover:scale-[1.02] transition-transform">
+                      <div className="relative aspect-square w-full rounded-xl bg-cream dark:bg-[#151a16] border border-warm-gray/60 overflow-hidden mb-3 group-hover:scale-[1.02] transition-transform">
                         {garment.imageUrl ? (
                           <Image
                             src={garment.imageUrl}
@@ -293,7 +276,7 @@ export default function WardrobeClothesExplorer({
                             className="object-cover object-center"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-forest">
+                          <div className="w-full h-full flex items-center justify-center text-forest dark:text-sage">
                             <Shirt className="w-10 h-10 opacity-60" />
                           </div>
                         )}
@@ -325,7 +308,7 @@ export default function WardrobeClothesExplorer({
                 <button
                   type="button"
                   onClick={onAddNewGarment}
-                  className="w-full h-full min-h-[220px] rounded-2xl border-2 border-dashed border-warm-gray hover:border-sage bg-cream/30 hover:bg-cream/60 flex flex-col items-center justify-center gap-2 text-muted-gray hover:text-forest transition-all cursor-pointer p-4 group"
+                  className="w-full h-full min-h-[220px] rounded-2xl border-2 border-dashed border-warm-gray hover:border-sage bg-cream/30 dark:bg-[#151a16] hover:bg-cream/60 dark:hover:bg-[#1c231e] flex flex-col items-center justify-center gap-2 text-muted-gray hover:text-forest dark:hover:text-sage transition-all cursor-pointer p-4 group"
                   aria-label="Add new garment"
                 >
                   <div className="w-10 h-10 rounded-full bg-surface border border-warm-gray flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:border-sage transition-all">

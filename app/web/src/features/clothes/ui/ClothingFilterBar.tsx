@@ -1,8 +1,8 @@
 import {
   CLOTHING_CATEGORIES,
   CLOTHING_SEASONS,
-  ClothingSeasonId,
-  ClothingFilterBarProps,
+  type ClothingSeasonId,
+  type ClothingFilterBarProps,
 } from "../types/clothing.types";
 
 export default function ClothingFilterBar({
@@ -48,7 +48,7 @@ export default function ClothingFilterBar({
           className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-150 cursor-pointer ${
             selectedCategory === "all"
               ? "bg-forest text-white shadow-xs"
-              : "bg-surface text-muted-gray border border-warm-gray hover:bg-pale-sage/40 hover:text-forest"
+              : "bg-surface text-muted-gray border border-warm-gray hover:bg-pale-sage/40 hover:text-forest dark:hover:text-sage"
           }`}
         >
           All Items
@@ -63,7 +63,7 @@ export default function ClothingFilterBar({
               className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-150 cursor-pointer ${
                 isActive
                   ? "bg-forest text-white shadow-xs"
-                  : "bg-surface text-muted-gray border border-warm-gray hover:bg-pale-sage/40 hover:text-forest"
+                  : "bg-surface text-muted-gray border border-warm-gray hover:bg-pale-sage/40 hover:text-forest dark:hover:text-sage"
               }`}
             >
               {cat.label}

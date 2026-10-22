@@ -1,15 +1,14 @@
 "use client";
 
-import { CLOSET_TYPES, ClosetTypeSelectorProps } from "../types/closet.types";
-import { useClosetTypeIcon } from "../hooks/useClosetTypeIcon";
+import { CLOSET_TYPES } from "../constants/closet.constants";
+import type { ClosetTypeSelectorProps } from "../types/closet.types";
+import ClosetTypeIcon from "./ClosetTypeIcon";
 
 export default function ClosetTypeSelector({
   value,
   onChange,
   error,
 }: ClosetTypeSelectorProps) {
-  const { getIcon } = useClosetTypeIcon();
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <label className="text-xs font-semibold uppercase tracking-wider text-muted-gray">
@@ -25,7 +24,7 @@ export default function ClosetTypeSelector({
               onClick={() => onChange(type.id)}
               className={`p-3.5 rounded-xl border text-left transition-all flex items-start gap-3 cursor-pointer ${
                 isSelected
-                  ? "bg-pale-sage/35 border-forest ring-1 ring-forest shadow-xs"
+                  ? "bg-pale-sage/35 border-forest dark:border-sage ring-1 ring-forest dark:ring-sage shadow-xs"
                   : "bg-surface border-warm-gray hover:bg-cream hover:border-sage/50"
               }`}
             >
@@ -33,17 +32,17 @@ export default function ClosetTypeSelector({
                 className={`p-2 rounded-lg shrink-0 ${
                   isSelected
                     ? "bg-forest text-white"
-                    : "bg-cream text-charcoal border border-warm-gray"
+                    : "bg-cream dark:bg-[#151a16] text-charcoal border border-warm-gray"
                 }`}
               >
-                {getIcon(type.id)}
+                <ClosetTypeIcon type={type.id} />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between gap-1">
                   <span className="text-sm font-semibold text-charcoal block">
                     {type.title}
                   </span>
-                  <span className="text-xs font-medium text-forest px-1.5 py-0.5 rounded-md bg-pale-sage border border-warm-gray/60">
+                  <span className="text-xs font-medium text-forest dark:text-sage px-1.5 py-0.5 rounded-md bg-pale-sage border border-warm-gray/60">
                     Max {type.defaultMaxSize}
                   </span>
                 </div>

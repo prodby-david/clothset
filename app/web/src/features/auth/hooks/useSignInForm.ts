@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginFormData, SignInFormProps } from "../types/auth.types";
+import { loginSchema } from "../schemas/auth.schema";
+import type { LoginFormData, SignInFormProps } from "../types/auth.types";
 import { useAuth } from "./useAuth";
 
 export function useSignInForm({

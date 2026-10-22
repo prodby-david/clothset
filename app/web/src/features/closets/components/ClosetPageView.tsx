@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import ClosetDetailView from "./ClosetDetailView";
-import { ClosetPageViewProps } from "../types/closet.types";
+import type { ClosetPageViewProps } from "../types/closet.types";
 
 async function ClosetDetailLoader({ params }: ClosetPageViewProps) {
   const { id } = await params;

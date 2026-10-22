@@ -1,4 +1,4 @@
-import { ClothingCardDetailsProps } from "../types/clothing.types";
+import type { ClothingCardDetailsProps } from "../types/clothing.types";
 
 export default function ClothingCardDetails({
   name,
@@ -15,7 +15,7 @@ export default function ClothingCardDetails({
           <span className="text-xs text-muted-gray font-medium">
             {color}
           </span>
-          <span className="text-warm-gray">•</span>
+          <span className="text-warm-gray dark:text-muted-gray/60">•</span>
           <span className="text-xs text-muted-gray">{seasonLabel}</span>
         </div>
       </div>

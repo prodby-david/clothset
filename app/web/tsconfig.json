@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@clothset/shared-schemas": ["../../packages/shared-schemas/src/index.ts"]
     }
   },
   "include": [

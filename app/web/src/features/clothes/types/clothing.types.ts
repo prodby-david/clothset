@@ -1,46 +1,16 @@
-import { z } from "zod";
+import type { z } from "zod";
+import {
+  CLOTHING_CATEGORIES,
+  CLOTHING_SEASONS,
+  DEFAULT_COLORS,
+} from "../constants/clothing.constants";
+import { clothingSchema } from "../schemas/clothing.schema";
 
-export const CLOTHING_CATEGORIES = [
-  { id: "tops", label: "Tops" },
-  { id: "bottoms", label: "Bottoms" },
-  { id: "outerwear", label: "Outerwear" },
-  { id: "footwear", label: "Footwear" },
-  { id: "accessories", label: "Accessories" },
-] as const;
+export { CLOTHING_CATEGORIES, CLOTHING_SEASONS, DEFAULT_COLORS };
+export { clothingSchema };
 
 export type ClothingCategoryId = (typeof CLOTHING_CATEGORIES)[number]["id"];
-
-export const CLOTHING_SEASONS = [
-  { id: "all-season", label: "All Season" },
-  { id: "spring", label: "Spring" },
-  { id: "summer", label: "Summer" },
-  { id: "fall", label: "Fall" },
-  { id: "winter", label: "Winter" },
-] as const;
-
 export type ClothingSeasonId = (typeof CLOTHING_SEASONS)[number]["id"];
-
-export const DEFAULT_COLORS = [
-  "White",
-  "Black",
-  "Charcoal",
-  "Beige",
-  "Cream",
-  "Navy",
-  "Sage Green",
-  "Forest Green",
-  "Brown",
-  "Denim Blue",
-];
-
-export const clothingSchema = z.object({
-  name: z.string().min(2, "Item name must be at least 2 characters"),
-  category: z.string().min(1, "Please select a category"),
-  color: z.string().min(1, "Please specify a primary color"),
-  season: z.string().min(1, "Please select a season"),
-  imageUrl: z.string().optional(),
-});
-
 export type ClothingFormData = z.infer<typeof clothingSchema>;
 
 export interface ClothingItem {

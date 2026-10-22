@@ -8,7 +8,7 @@ import Button from "@/shared/components/ui/Button";
 import ClothingImageUploader from "../ui/ClothingImageUploader";
 import ClothingColorPicker from "../ui/ClothingColorPicker";
 import {
-  ClothingFormModalProps,
+  type ClothingFormModalProps,
   CLOTHING_CATEGORIES,
   CLOTHING_SEASONS,
 } from "../types/clothing.types";

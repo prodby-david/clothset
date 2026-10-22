@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import Card from "@/shared/components/ui/Card";
 import ClosetCardHeader from "./ClosetCardHeader";
 import ClosetCardFooter from "./ClosetCardFooter";
-import { ClosetCardProps } from "../types/closet.types";
+import type { ClosetCardProps } from "../types/closet.types";
 import { useClosetCard } from "../hooks/useClosetCard";
 
 export default function ClosetCard({
@@ -10,6 +10,7 @@ export default function ClosetCard({
   onEdit,
   onDelete,
   onSelect,
+  onAddGarment,
 }: ClosetCardProps) {
   const { typeTitle } = useClosetCard(closet);
 
@@ -41,8 +42,9 @@ export default function ClosetCard({
         <ClosetCardFooter
           closetId={closet.id}
           clothesCount={closet.clothesCount}
-          maxSize={closet.maxSize}
+          maxSize={closet.maxSize || closet.maxItems}
           onSelect={onSelect}
+          onAddGarment={onAddGarment}
         />
       </Card>
     </motion.div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Sparkles } from "lucide-react";
+import { Plus } from "lucide-react";
 import PageTransition from "@/shared/components/ui/PageTransition";
 import DeleteConfirmModal from "@/shared/components/ui/DeleteConfirmModal";
 import Button from "@/shared/components/ui/Button";
@@ -8,10 +8,9 @@ import DashboardSidebar from "../ui/DashboardSidebar";
 import DashboardBottomNav from "../ui/DashboardBottomNav";
 import DashboardOverviewTab from "../ui/DashboardOverviewTab";
 import DashboardClothesTab from "../ui/DashboardClothesTab";
-import DailyOutfitSpotlight from "../ui/DailyOutfitSpotlight";
-import WardrobeInsights from "../ui/WardrobeInsights";
 import ClosetList from "@/features/closets/components/ClosetList";
 import ClosetFormModal from "@/features/closets/ui/ClosetFormModal";
+import WardrobeTemplateCatalogModal from "@/features/closets/ui/WardrobeTemplateCatalogModal";
 import DashboardClothingModal from "../ui/DashboardClothingModal";
 import { useDashboardView } from "../hooks/useDashboardView";
 
@@ -22,6 +21,10 @@ export default function DashboardView() {
     closets,
     isLoading,
     totalClothesCount,
+    planLimit,
+    maxClosets,
+    isCatalogOpen,
+    setIsCatalogOpen,
     isCreateModalOpen,
     setIsCreateModalOpen,
     editingCloset,
@@ -33,21 +36,17 @@ export default function DashboardView() {
     activeTab,
     handleSelectTab,
     handleSelectWardrobe,
-    activeOccasion,
-    currentOutfit,
-    isCurrentOutfitSaved,
     filteredGarments,
     selectedWardrobeId,
     setSelectedWardrobeId,
     selectedCategory,
     setSelectedCategory,
-    handleSelectOccasion,
-    handleShuffleOutfit,
-    handleToggleSaveOutfit,
     handleCreateSubmit,
+    handleActivateTemplate,
     handleUpdateSubmit,
     handleDeleteConfirm,
     handleAddGarmentSubmit,
+    handleDeleteGarment,
   } = useDashboardView();
 
   return (
@@ -55,14 +54,16 @@ export default function DashboardView() {
       <DashboardSidebar
         userEmail={user?.email || "Guest"}
         userName={user?.name}
+        userPlan={user?.plan}
         onLogout={logout}
         closets={closets}
         selectedWardrobeId={selectedWardrobeId}
         onSelectWardrobe={handleSelectWardrobe}
         activeTab={activeTab}
         onSelectTab={handleSelectTab}
-        onCreateCloset={() => setIsCreateModalOpen(true)}
+        onCreateCloset={() => setIsCatalogOpen(true)}
         totalClothesCount={totalClothesCount}
+        planLimit={planLimit}
       />
 
       <main className="flex-1 w-full min-w-0 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-24 lg:pb-6 flex flex-col gap-6">
@@ -70,11 +71,21 @@ export default function DashboardView() {
           {activeTab === "overview" && (
             <DashboardOverviewTab
               userName={user?.name}
+              userPlan={user?.plan}
               totalClosets={closets.length}
               totalGarments={totalClothesCount}
+              planLimit={planLimit}
+              closets={closets}
               onNavigateTab={handleSelectTab}
-              onCreateCloset={() => setIsCreateModalOpen(true)}
+              onCreateCloset={() => setIsCatalogOpen(true)}
               onAddGarment={() => setIsAddGarmentOpen(true)}
+              onSelectWardrobe={handleSelectWardrobe}
+              onEditCloset={(closet) => setEditingCloset(closet)}
+              onDeleteCloset={(closet) => setDeletingCloset(closet)}
+              onAddGarmentToCloset={(closetId) => {
+                setSelectedWardrobeId(closetId);
+                setIsAddGarmentOpen(true);
+              }}
             />
           )}
 
@@ -83,20 +94,20 @@ export default function DashboardView() {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-surface border border-warm-gray shadow-xs">
                 <div>
                   <h1 className="text-xl sm:text-2xl font-bold text-charcoal tracking-tight">
-                    Wardrobe Closets & Capsules
+                    Wardrobes & Closets
                   </h1>
                   <p className="text-xs sm:text-sm text-muted-gray mt-0.5">
-                    Organize and track capacity across all your specialized collections
+                    Choose from curated wardrobes or organize your collections
                   </p>
                 </div>
                 <Button
                   variant="primary"
                   size="md"
-                  onClick={() => setIsCreateModalOpen(true)}
+                  onClick={() => setIsCatalogOpen(true)}
                   className="gap-2 text-sm h-9 px-4 shrink-0"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>New Capsule</span>
+                  <span>Choose Wardrobe</span>
                 </Button>
               </div>
 
@@ -105,7 +116,7 @@ export default function DashboardView() {
                 isLoading={isLoading}
                 onEdit={(closet) => setEditingCloset(closet)}
                 onDelete={(closet) => setDeletingCloset(closet)}
-                onCreateNew={() => setIsCreateModalOpen(true)}
+                onCreateNew={() => setIsCatalogOpen(true)}
                 onSelectCloset={handleSelectWardrobe}
               />
             </div>
@@ -120,66 +131,9 @@ export default function DashboardView() {
               onSelectCategory={setSelectedCategory}
               garments={filteredGarments}
               onAddNewGarment={() => setIsAddGarmentOpen(true)}
+              onDeleteGarment={handleDeleteGarment}
               onNavigateTab={handleSelectTab}
             />
-          )}
-
-          {activeTab === "outfits" && (
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-surface border border-warm-gray shadow-xs">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-sage">
-                      Outfit Ideas
-                    </span>
-                  </div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-charcoal tracking-tight">
-                    Daily Outfit Spotlight
-                  </h1>
-                  <p className="text-xs sm:text-sm text-muted-gray mt-0.5">
-                    Coordinated outfit combinations crafted from your personal closet pieces
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="md"
-                  onClick={handleShuffleOutfit}
-                  className="gap-2 text-sm h-9 px-4 shrink-0"
-                >
-                  <Sparkles className="w-4 h-4 text-sage" />
-                  <span>Shuffle Outfit</span>
-                </Button>
-              </div>
-
-              <DailyOutfitSpotlight
-                activeOccasion={activeOccasion}
-                onSelectOccasion={handleSelectOccasion}
-                outfit={currentOutfit}
-                onShuffle={handleShuffleOutfit}
-                isSaved={isCurrentOutfitSaved}
-                onToggleSave={handleToggleSaveOutfit}
-              />
-            </div>
-          )}
-
-          {activeTab === "insights" && (
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-surface border border-warm-gray shadow-xs">
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-charcoal tracking-tight">
-                    Wardrobe Insights & Analytics
-                  </h1>
-                  <p className="text-xs sm:text-sm text-muted-gray mt-0.5">
-                    Breakdown of your wardrobe balance, category splits, and color distribution
-                  </p>
-                </div>
-              </div>
-
-              <WardrobeInsights
-                totalClosets={closets.length}
-                totalGarments={totalClothesCount}
-              />
-            </div>
           )}
         </PageTransition>
       </main>
@@ -187,6 +141,15 @@ export default function DashboardView() {
       <DashboardBottomNav
         activeTab={activeTab}
         onSelectTab={handleSelectTab}
+      />
+
+      <WardrobeTemplateCatalogModal
+        isOpen={isCatalogOpen}
+        onClose={() => setIsCatalogOpen(false)}
+        onActivate={handleActivateTemplate}
+        userPlan={user?.plan}
+        closets={closets}
+        maxClosets={maxClosets}
       />
 
       <ClosetFormModal

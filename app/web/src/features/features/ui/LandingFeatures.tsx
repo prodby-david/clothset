@@ -25,10 +25,10 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
           <Badge variant="accent" className="mb-3">
             Wardrobe Features
           </Badge>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-charcoal">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-charcoal">
             Designed to make getting dressed easy every morning.
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-muted-gray leading-relaxed max-w-xl mx-auto">
+          <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-xl mx-auto">
             Clothset helps you organize your clothes and gives you fresh outfit ideas
             from what you already own.
           </p>
@@ -41,10 +41,10 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.45, delay: 0.05, ease: "easeOut" }}
             whileHover={{ y: -3 }}
-            className="rounded-2xl border border-warm-gray bg-cream/40 p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
+            className="rounded-2xl border border-warm-gray bg-surface p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
           >
             <div>
-              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest flex items-center justify-center mb-6 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center mb-6 shadow-xs">
                 <Layers className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-charcoal">
@@ -63,7 +63,7 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
                   <span className="text-sage">16 Items</span>
                 </div>
                 <div className="w-full bg-cream rounded-full h-2 overflow-hidden">
-                  <div className="bg-forest h-full rounded-full w-3/4" />
+                  <div className="bg-forest dark:bg-sage h-full rounded-full w-3/4" />
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-muted-gray pt-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sage" />
@@ -79,10 +79,10 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.45, delay: 0.15, ease: "easeOut" }}
             whileHover={{ y: -3 }}
-            className="rounded-2xl border border-warm-gray bg-cream/40 p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
+            className="rounded-2xl border border-warm-gray bg-surface p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
           >
             <div>
-              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest flex items-center justify-center mb-6 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center mb-6 shadow-xs">
                 <Sliders className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-charcoal">
@@ -121,10 +121,10 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.45, delay: 0.25, ease: "easeOut" }}
             whileHover={{ y: -3 }}
-            className="rounded-2xl border border-warm-gray bg-cream/40 p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
+            className="rounded-2xl border border-warm-gray bg-surface p-6 sm:p-8 flex flex-col justify-between hover:border-sage/60 hover:shadow-sm transition-all"
           >
             <div>
-              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest flex items-center justify-center mb-6 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center mb-6 shadow-xs">
                 <Compass className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-charcoal">
@@ -144,10 +144,10 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
                 </div>
                 <div className="flex items-center justify-between text-xs text-muted-gray">
                   <span>Top + Bottom + Loafers</span>
-                  <span className="text-forest font-semibold">Ready to wear</span>
+                  <span className="text-forest dark:text-sage font-semibold">Ready to wear</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-muted-gray pt-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-forest" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-forest dark:text-sage" />
                   <span>Uses items you already own</span>
                 </div>
               </div>

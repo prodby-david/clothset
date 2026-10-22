@@ -1,336 +1,29 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useClosets } from "@/features/closets/hooks/useClosets";
-import { Closet, ClosetFormData } from "@/features/closets/types/closet.types";
-import {
-  DailyOutfit,
+import type { Closet, ClosetFormData } from "@/features/closets/types/closet.types";
+import type {
   RecentGarment,
   DashboardClothingFormData,
   DashboardTab,
 } from "../types/dashboard.types";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-
-const SAMPLE_DAILY_OUTFITS: Record<"work" | "casual" | "evening", DailyOutfit[]> = {
-  work: [
-    {
-      id: "do_w1",
-      title: "Smart Workday Minimal",
-      occasion: "work",
-      weather: "Mild & Sunny • 21°C",
-      harmony: "98% Color Harmony",
-      top: {
-        id: "t1",
-        name: "Oatmeal Linen Overshirt",
-        category: "Tops",
-        color: "Warm Cream",
-        imageUrl:
-          "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80",
-      },
-      bottom: {
-        id: "b1",
-        name: "Pleated Relaxed Trousers",
-        category: "Bottoms",
-        color: "Sage Green",
-        imageUrl:
-          "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80",
-      },
-      footwear: {
-        id: "f1",
-        name: "Classic Suede Penny Loafers",
-        category: "Footwear",
-        color: "Earthy Taupe",
-        imageUrl:
-          "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80",
-      },
-      reason:
-        "Tonal cream and sage earthy contrast. Breathable fabrics structured for casual workdays, office presentations, or studio visits.",
-    },
-    {
-      id: "do_w2",
-      title: "Clean Structured Professional",
-      occasion: "work",
-      weather: "Partly Cloudy • 19°C",
-      harmony: "96% Color Harmony",
-      top: {
-        id: "t2",
-        name: "Crisp Oxford Cotton Shirt",
-        category: "Tops",
-        color: "Off White",
-        imageUrl:
-          "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80",
-      },
-      bottom: {
-        id: "b2",
-        name: "Tailored Charcoal Chinos",
-        category: "Bottoms",
-        color: "Charcoal",
-        imageUrl:
-          "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=600&q=80",
-      },
-      footwear: {
-        id: "f2",
-        name: "Minimalist Derby Shoes",
-        category: "Footwear",
-        color: "Deep Umber",
-        imageUrl:
-          "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80",
-      },
-      reason:
-        "High contrast monochromatic pairing with subtle dark earthy footwear. Clean silhouette optimized for all-day focus.",
-    },
-  ],
-  casual: [
-    {
-      id: "do_c1",
-      title: "Weekend Studio Relaxed",
-      occasion: "casual",
-      weather: "Pleasant • 23°C",
-      harmony: "95% Silhouette Fit",
-      top: {
-        id: "t3",
-        name: "Heavyweight Boxy Cotton Tee",
-        category: "Tops",
-        color: "Warm Cream",
-        imageUrl:
-          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
-      },
-      bottom: {
-        id: "b3",
-        name: "Wide-Leg Washed Canvas Pants",
-        category: "Bottoms",
-        color: "Sage Green",
-        imageUrl:
-          "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=600&q=80",
-      },
-      footwear: {
-        id: "f3",
-        name: "Low-Profile Neutral Trainers",
-        category: "Footwear",
-        color: "Off-White / Taupe",
-        imageUrl:
-          "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80",
-      },
-      reason:
-        "Relaxed boxy proportions with soft neutrals. Easy movement with clean visual lines for coffee walks or gallery afternoons.",
-    },
-    {
-      id: "do_c2",
-      title: "Casual Layered Stroll",
-      occasion: "casual",
-      weather: "Cool Breeze • 18°C",
-      harmony: "94% Silhouette Fit",
-      top: {
-        id: "t4",
-        name: "Textured Waffle Knit Crew",
-        category: "Tops",
-        color: "Earthy Sand",
-        imageUrl:
-          "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80",
-      },
-      bottom: {
-        id: "b4",
-        name: "Relaxed Fit Denim",
-        category: "Bottoms",
-        color: "Faded Indigo",
-        imageUrl:
-          "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80",
-      },
-      footwear: {
-        id: "f4",
-        name: "Suede Chukka Boots",
-        category: "Footwear",
-        color: "Taupe",
-        imageUrl:
-          "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80",
-      },
-      reason:
-        "Tactile waffle knit layered over soft denim, grounded by earthy chukka boots for effortless transitional weather.",
-    },
-  ],
-  evening: [
-    {
-      id: "do_e1",
-      title: "Evening Dinner & Drinks",
-      occasion: "evening",
-      weather: "Cool Evening • 17°C",
-      harmony: "97% Color Harmony",
-      top: {
-        id: "t5",
-        name: "Structured Merino Cardigan",
-        category: "Outerwear",
-        color: "Forest Green",
-        imageUrl:
-          "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80",
-      },
-      bottom: {
-        id: "b5",
-        name: "Pleated Tapered Slacks",
-        category: "Bottoms",
-        color: "Deep Charcoal",
-        imageUrl:
-          "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80",
-      },
-      footwear: {
-        id: "f5",
-        name: "Polished Chelsea Boots",
-        category: "Footwear",
-        color: "Dark Espresso",
-        imageUrl:
-          "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=600&q=80",
-      },
-      reason:
-        "Rich deep forest and charcoal tones create an intimate, sophisticated evening look with tactile merino warmth.",
-    },
-  ],
-};
-
-const INITIAL_RECENT_GARMENTS: RecentGarment[] = [
-  {
-    id: "rg_1",
-    name: "Oatmeal Linen Overshirt",
-    category: "Tops",
-    color: "Warm Cream",
-    season: "Spring / Summer",
-    closetId: "cls_1",
-    closetName: "My Daily Wardrobe",
-    imageUrl:
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_2",
-    name: "Heavyweight Boxy Cotton Tee",
-    category: "Tops",
-    color: "Warm Cream",
-    season: "All Season",
-    closetId: "cls_1",
-    closetName: "My Daily Wardrobe",
-    imageUrl:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_3",
-    name: "Wide-Leg Washed Canvas Pants",
-    category: "Bottoms",
-    color: "Sage Green",
-    season: "All Season",
-    closetId: "cls_1",
-    closetName: "My Daily Wardrobe",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_4",
-    name: "Classic Suede Penny Loafers",
-    category: "Footwear",
-    color: "Earthy Taupe",
-    season: "Spring / Autumn",
-    closetId: "cls_1",
-    closetName: "My Daily Wardrobe",
-    imageUrl:
-      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_5",
-    name: "Crisp Oxford Cotton Shirt",
-    category: "Tops",
-    color: "Off White",
-    season: "All Season",
-    closetId: "cls_2",
-    closetName: "Office & Formal Wear",
-    imageUrl:
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_6",
-    name: "Pleated Relaxed Trousers",
-    category: "Bottoms",
-    color: "Sage Green",
-    season: "All Season",
-    closetId: "cls_2",
-    closetName: "Office & Formal Wear",
-    imageUrl:
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_7",
-    name: "Tailored Charcoal Chinos",
-    category: "Bottoms",
-    color: "Charcoal",
-    season: "All Season",
-    closetId: "cls_2",
-    closetName: "Office & Formal Wear",
-    imageUrl:
-      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_8",
-    name: "Structured Merino Cardigan",
-    category: "Outerwear",
-    color: "Forest Green",
-    season: "Autumn / Winter",
-    closetId: "cls_2",
-    closetName: "Office & Formal Wear",
-    imageUrl:
-      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_9",
-    name: "Textured Waffle Knit Crew",
-    category: "Tops",
-    color: "Earthy Sand",
-    season: "All Season",
-    closetId: "cls_3",
-    closetName: "Weekend Minimalist Capsule",
-    imageUrl:
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_10",
-    name: "Relaxed Fit Denim",
-    category: "Bottoms",
-    color: "Faded Indigo",
-    season: "All Season",
-    closetId: "cls_3",
-    closetName: "Weekend Minimalist Capsule",
-    imageUrl:
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_11",
-    name: "Low-Profile Neutral Trainers",
-    category: "Footwear",
-    color: "Off-White",
-    season: "All Season",
-    closetId: "cls_3",
-    closetName: "Weekend Minimalist Capsule",
-    imageUrl:
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "rg_12",
-    name: "Suede Chukka Boots",
-    category: "Footwear",
-    color: "Taupe",
-    season: "Autumn / Winter",
-    closetId: "cls_3",
-    closetName: "Weekend Minimalist Capsule",
-    imageUrl:
-      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80",
-  },
-];
-
-const DEFAULT_IMAGE_FALLBACKS: Record<string, string> = {
-  Tops: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
-  Bottoms: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80",
-  Outerwear: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80",
-  Footwear: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80",
-  Accessories: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=600&q=80",
-};
+import {
+  normalizeCategory,
+  CATEGORY_IMAGE_FALLBACKS,
+} from "@/features/clothes/lib/garment-store";
+import {
+  getAllClothesApi,
+  createClothingApi,
+  deleteClothingApi,
+  type CreateClothingPayload,
+} from "@/features/clothes/api/clothes.api";
 
 export function useDashboardView() {
   const { user, logout } = useAuth();
+  const userId = user?.id;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -338,41 +31,75 @@ export function useDashboardView() {
   const {
     closets,
     isLoading,
+    activateTemplate,
     createCloset,
     updateCloset,
     deleteCloset,
   } = useClosets();
 
+  const normalizedPlan = (user?.plan || "FREE").toUpperCase();
+  const maxClosets = normalizedPlan === "ELITE" ? 8 : normalizedPlan === "PLUS" ? 5 : 2;
+  const planLimit =
+    normalizedPlan === "ELITE"
+      ? 400
+      : normalizedPlan === "PLUS"
+      ? 150
+      : 40;
+
   const urlTab = searchParams.get("tab") as DashboardTab | null;
   const activeTab: DashboardTab =
-    urlTab && ["overview", "wardrobes", "clothes", "outfits", "insights"].includes(urlTab)
+    urlTab && ["overview", "wardrobes", "clothes"].includes(urlTab)
       ? urlTab
       : "overview";
 
   const selectedWardrobeId: string = searchParams.get("closetId") || "all";
 
+  const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
+  const [hasAutoPrompted, setHasAutoPrompted] = useState<boolean>(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
   const [editingCloset, setEditingCloset] = useState<Closet | null>(null);
   const [deletingCloset, setDeletingCloset] = useState<Closet | null>(null);
   const [isAddGarmentOpen, setIsAddGarmentOpen] = useState<boolean>(false);
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [recentGarments, setRecentGarments] = useState<RecentGarment[]>([]);
 
-  const [activeOccasion, setActiveOccasion] = useState<"work" | "casual" | "evening">("work");
-  const [outfitIndex, setOutfitIndex] = useState<number>(0);
-  const [savedOutfitIds, setSavedOutfitIds] = useState<Set<string>>(new Set(["do_w1"]));
-
-  const [recentGarments, setRecentGarments] = useState<RecentGarment[]>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("clothset_recent_garments");
-      if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch {}
-      }
+  const fetchGarments = useCallback(async () => {
+    if (!userId) {
+      setRecentGarments([]);
+      return;
     }
-    return INITIAL_RECENT_GARMENTS;
-  });
+    try {
+      const items = await getAllClothesApi();
+      const mapped: RecentGarment[] = items.map((item) => {
+        const closet = closets.find((c) => c.id === item.closetId);
+        const norm = normalizeCategory(item.category);
+        return {
+          id: item.id,
+          name: item.name,
+          category: item.category,
+          color: item.color || "Neutral",
+          season: item.seasons?.[0] || "All Season",
+          closetId: item.closetId,
+          closetName: closet?.name || "Wardrobe",
+          imageUrl:
+            item.imageKey ||
+            item.thumbnailKey ||
+            CATEGORY_IMAGE_FALLBACKS[norm] ||
+            CATEGORY_IMAGE_FALLBACKS.Tops,
+        };
+      });
+      setRecentGarments(mapped);
+    } catch {
+      setRecentGarments([]);
+    }
+  }, [userId, closets]);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      void fetchGarments();
+    });
+  }, [fetchGarments]);
 
   const handleSelectTab = useCallback(
     (tab: DashboardTab, closetId?: string) => {
@@ -420,53 +147,32 @@ export function useDashboardView() {
     [handleSelectTab]
   );
 
-  const currentOccasionOutfits = SAMPLE_DAILY_OUTFITS[activeOccasion];
-  const currentOutfit = currentOccasionOutfits[outfitIndex % currentOccasionOutfits.length];
-  const isCurrentOutfitSaved = savedOutfitIds.has(currentOutfit.id);
-
-  const handleSelectOccasion = (occasion: "work" | "casual" | "evening") => {
-    setActiveOccasion(occasion);
-    setOutfitIndex(0);
-  };
-
-  const handleShuffleOutfit = () => {
-    setOutfitIndex((prev) => prev + 1);
-  };
-
-  const handleToggleSaveOutfit = () => {
-    setSavedOutfitIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(currentOutfit.id)) {
-        next.delete(currentOutfit.id);
-      } else {
-        next.add(currentOutfit.id);
-      }
-      return next;
-    });
-  };
-
-  const handleMatchOutfitClick = () => {
-    handleShuffleOutfit();
-    handleSelectTab("outfits");
-  };
-
-  const totalClothesCount = closets.reduce(
-    (acc, curr) => acc + (curr.clothesCount || 0),
-    0
-  );
+  const totalClothesCount = recentGarments.length;
 
   const filteredGarments = useMemo(() => {
     return recentGarments.filter((g) => {
       const matchesWardrobe =
         selectedWardrobeId === "all" || g.closetId === selectedWardrobeId;
-      const matchesCategory =
-        selectedCategory === "all" || g.category === selectedCategory;
-      return matchesWardrobe && matchesCategory;
+      return matchesWardrobe;
     });
-  }, [recentGarments, selectedWardrobeId, selectedCategory]);
+  }, [recentGarments, selectedWardrobeId]);
+
+  useEffect(() => {
+    if (!isLoading && closets.length === 0 && !hasAutoPrompted) {
+      queueMicrotask(() => {
+        setIsCatalogOpen(true);
+        setHasAutoPrompted(true);
+      });
+    }
+  }, [isLoading, closets.length, hasAutoPrompted]);
 
   const handleCreateSubmit = async (data: ClosetFormData) => {
     const created = await createCloset(data);
+    handleSelectWardrobe(created.id);
+  };
+
+  const handleActivateTemplate = async (templateId: string) => {
+    const created = await activateTemplate(templateId);
     handleSelectWardrobe(created.id);
   };
 
@@ -491,26 +197,37 @@ export function useDashboardView() {
 
   const handleAddGarmentSubmit = async (data: DashboardClothingFormData) => {
     const targetCloset = closets.find((c) => c.id === data.closetId);
-    const fallbackImage =
-      DEFAULT_IMAGE_FALLBACKS[data.category] || DEFAULT_IMAGE_FALLBACKS.Tops;
+    const cat = (data.category || "TOPS").toUpperCase() as CreateClothingPayload["category"];
+
+    const created = await createClothingApi(data.closetId, {
+      name: data.name,
+      category: cat,
+      color: data.color,
+      seasons: [data.season],
+      imageKey: data.imageUrl || data.imageKey,
+    });
 
     const newGarment: RecentGarment = {
-      id: `rg_${Date.now()}`,
-      name: data.name,
-      category: data.category,
-      color: data.color,
+      id: created.id,
+      name: created.name,
+      category: created.category,
+      color: created.color || data.color,
       season: data.season,
-      closetId: data.closetId || closets[0]?.id || "cls_1",
-      closetName: targetCloset?.name || "Capsule Wardrobe",
-      imageUrl: fallbackImage,
+      closetId: created.closetId,
+      closetName: targetCloset?.name || "Wardrobe",
+      imageUrl:
+        created.imageKey ||
+        data.imageUrl ||
+        CATEGORY_IMAGE_FALLBACKS[created.category] ||
+        CATEGORY_IMAGE_FALLBACKS.Tops,
     };
 
-    const updated = [newGarment, ...recentGarments];
-    setRecentGarments(updated);
+    setRecentGarments((prev) => [newGarment, ...prev]);
+  };
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("clothset_recent_garments", JSON.stringify(updated));
-    }
+  const handleDeleteGarment = async (clothingId: string) => {
+    await deleteClothingApi(clothingId);
+    setRecentGarments((prev) => prev.filter((g) => g.id !== clothingId));
   };
 
   return {
@@ -519,6 +236,11 @@ export function useDashboardView() {
     closets,
     isLoading,
     totalClothesCount,
+    planLimit,
+    isCatalogOpen,
+    setIsCatalogOpen,
+    handleActivateTemplate,
+    maxClosets,
     isCreateModalOpen,
     setIsCreateModalOpen,
     editingCloset,
@@ -531,22 +253,16 @@ export function useDashboardView() {
     setActiveTab,
     handleSelectTab,
     handleSelectWardrobe,
-    activeOccasion,
-    currentOutfit,
-    isCurrentOutfitSaved,
     recentGarments,
     filteredGarments,
     selectedWardrobeId,
     setSelectedWardrobeId,
     selectedCategory,
     setSelectedCategory,
-    handleSelectOccasion,
-    handleShuffleOutfit,
-    handleToggleSaveOutfit,
-    handleMatchOutfitClick,
     handleCreateSubmit,
     handleUpdateSubmit,
     handleDeleteConfirm,
     handleAddGarmentSubmit,
+    handleDeleteGarment,
   };
 }

@@ -17,12 +17,12 @@ export function useLandingNav() {
 
   const getLinkClass = (href: string) =>
     pathname === href
-      ? "text-forest font-semibold"
+      ? "text-forest dark:text-sage font-semibold"
       : "text-muted-gray hover:text-charcoal transition-colors";
 
   const getMobileLinkClass = (href: string) =>
     pathname === href
-      ? "px-3.5 py-2 rounded-xl bg-pale-sage text-forest font-semibold"
+      ? "px-3.5 py-2 rounded-xl bg-pale-sage text-forest dark:text-sage font-semibold"
       : "px-3.5 py-2 rounded-xl hover:bg-surface text-charcoal transition-colors";
 
   return {

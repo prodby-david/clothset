@@ -2,12 +2,10 @@
 
 import { motion } from "motion/react";
 import Badge from "@/shared/components/ui/Badge";
-import { LandingHowItWorksProps } from "../types/how-it-works.types";
-import { useHowItWorksSteps } from "../hooks/useHowItWorksSteps";
+import type { LandingHowItWorksProps } from "../types/how-it-works.types";
+import { HOW_IT_WORKS_STEPS } from "../constants/how-it-works.constants";
 
 export default function LandingHowItWorks({ className = "" }: LandingHowItWorksProps) {
-  const { steps } = useHowItWorksSteps();
-
   return (
     <section
       id="how-it-works"
@@ -24,17 +22,17 @@ export default function LandingHowItWorks({ className = "" }: LandingHowItWorksP
           <Badge variant="accent" className="mb-3">
             Simple Process
           </Badge>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-charcoal">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-charcoal">
             How Clothset works in three steps.
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-muted-gray leading-relaxed max-w-xl mx-auto">
-            Move from a chaotic physical closet to a curated digital capsule in
+          <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-xl mx-auto">
+            Move from a chaotic physical closet to a curated digital wardrobe in
             minutes.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {steps.map((step, index) => {
+          {HOW_IT_WORKS_STEPS.map((step, index) => {
             const Icon = step.icon;
             return (
               <motion.div
@@ -48,7 +46,7 @@ export default function LandingHowItWorks({ className = "" }: LandingHowItWorksP
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                    <div className="w-12 h-12 rounded-xl bg-pale-sage text-forest dark:text-sage flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className="text-3xl font-bold text-warm-gray/90 tracking-tight font-mono">

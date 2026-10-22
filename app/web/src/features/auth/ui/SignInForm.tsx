@@ -25,9 +25,9 @@ export default function SignInForm(props: Partial<SignInFormProps> = {}) {
   } = useSignInForm(props);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3.5">
       {activeError && (
-        <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+        <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs">
           {activeError}
         </div>
       )}
@@ -36,7 +36,7 @@ export default function SignInForm(props: Partial<SignInFormProps> = {}) {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isBusy || isGoogleLoading}
-        className="w-full h-11 px-4 rounded-xl border border-warm-gray bg-surface text-charcoal hover:bg-cream hover:border-sage/50 transition-colors flex items-center justify-center gap-3 text-sm font-semibold shadow-xs disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+        className="w-full h-10 px-4 rounded-xl border border-warm-gray bg-surface text-charcoal hover:bg-cream hover:border-sage/50 transition-colors flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold shadow-xs disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
       >
         {isGoogleLoading ? (
           <Loader2 className="w-4 h-4 animate-spin text-muted-gray" />
@@ -46,14 +46,14 @@ export default function SignInForm(props: Partial<SignInFormProps> = {}) {
         <span>Continue with Google</span>
       </button>
 
-      <div className="relative flex items-center justify-center my-1">
+      <div className="relative flex items-center justify-center my-0.5">
         <div className="w-full border-t border-warm-gray" />
-        <span className="absolute bg-surface px-3 text-xs uppercase tracking-wider text-muted-gray">
+        <span className="absolute bg-surface px-3 text-[11px] uppercase tracking-wider text-muted-gray">
           or continue with email
         </span>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <Input
           label="Email address"
           type="email"
@@ -86,36 +86,36 @@ export default function SignInForm(props: Partial<SignInFormProps> = {}) {
           {...register("password")}
         />
 
-        <div className="flex items-center justify-between text-xs pt-1">
-          <label className="flex items-center gap-2 text-charcoal cursor-pointer select-none">
+        <div className="flex items-center justify-between text-xs pt-0.5">
+          <label className="flex items-center gap-2 text-charcoal cursor-pointer select-none text-[11px] sm:text-xs">
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={toggleRememberMe}
-              className="w-4 h-4 rounded border-warm-gray text-forest focus:ring-sage accent-forest cursor-pointer"
+              className="w-3.5 h-3.5 rounded border-warm-gray text-forest focus:ring-sage accent-forest cursor-pointer"
             />
             <span>Remember me for 30 days</span>
           </label>
           <Link
             href="/sign-in"
-            className="text-forest hover:text-forest/80 font-medium hover:underline"
+            className="text-forest dark:text-sage hover:text-forest/80 font-medium hover:underline text-[11px] sm:text-xs"
           >
             Forgot password?
           </Link>
         </div>
 
-        <div className="pt-2">
+        <div className="pt-1">
           <Button
             type="submit"
             variant="primary"
-            className="w-full h-11 font-semibold"
+            className="w-full h-10 font-semibold text-sm"
             isLoading={isBusy}
           >
             Sign In
           </Button>
         </div>
 
-        <div className="text-center pt-2">
+        <div className="text-center pt-0.5">
           <span className="text-xs text-muted-gray">
             Do not have an account?{" "}
             <Link

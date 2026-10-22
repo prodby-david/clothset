@@ -5,7 +5,10 @@ import { Plus, Shirt } from "lucide-react";
 import { motion } from "motion/react";
 import Card from "@/shared/components/ui/Card";
 import Badge from "@/shared/components/ui/Badge";
-import { RecentClothesGridProps, RecentGarment } from "../types/dashboard.types";
+import type {
+  RecentGarment,
+  RecentClothesGridProps,
+} from "../types/dashboard.types";
 
 export default function RecentClothesGrid({
   items,
@@ -19,7 +22,7 @@ export default function RecentClothesGrid({
             Recently Added Pieces
           </h2>
           <p className="text-xs text-muted-gray mt-0.5">
-            Latest additions cataloged across your custom capsules
+            Latest additions cataloged across your custom wardrobes
           </p>
         </div>
       </div>
@@ -35,7 +38,7 @@ export default function RecentClothesGrid({
           >
             <Card className="p-3.5 h-full flex flex-col justify-between border border-warm-gray bg-surface hover:border-sage/60 hover:shadow-sm transition-all group">
               <div>
-                <div className="relative aspect-square w-full rounded-xl bg-cream border border-warm-gray/60 flex items-center justify-center text-forest overflow-hidden mb-3 group-hover:scale-[1.02] transition-transform">
+                <div className="relative aspect-square w-full rounded-xl bg-cream dark:bg-[#151a16] border border-warm-gray/60 flex items-center justify-center text-forest dark:text-sage overflow-hidden mb-3 group-hover:scale-[1.02] transition-transform">
                   {item.imageUrl ? (
                     <Image
                       src={item.imageUrl}
@@ -78,7 +81,7 @@ export default function RecentClothesGrid({
           <button
             type="button"
             onClick={onAddNew}
-            className="w-full h-full min-h-[180px] rounded-2xl border-2 border-dashed border-warm-gray hover:border-sage bg-cream/30 hover:bg-cream/60 flex flex-col items-center justify-center gap-2 text-muted-gray hover:text-forest transition-all cursor-pointer p-4 group"
+            className="w-full h-full min-h-[180px] rounded-2xl border-2 border-dashed border-warm-gray hover:border-sage bg-cream/30 dark:bg-[#151a16] hover:bg-cream/60 dark:hover:bg-[#1c231e] flex flex-col items-center justify-center gap-2 text-muted-gray hover:text-forest dark:hover:text-sage transition-all cursor-pointer p-4 group"
             aria-label="Add new garment"
           >
             <div className="w-10 h-10 rounded-full bg-surface border border-warm-gray flex items-center justify-center shadow-xs group-hover:scale-110 group-hover:border-sage transition-all">

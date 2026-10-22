@@ -5,8 +5,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   clothingSchema,
-  ClothingFormData,
-  ClothingFormModalProps,
+  type ClothingFormData,
+  type ClothingFormModalProps,
 } from "../types/clothing.types";
 
 export function useClothingForm({

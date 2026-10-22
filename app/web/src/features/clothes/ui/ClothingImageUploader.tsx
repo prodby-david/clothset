@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import Button from "@/shared/components/ui/Button";
 import Input from "@/shared/components/ui/Input";
-import { ClothingImageUploaderProps } from "../types/clothing.types";
+import type { ClothingImageUploaderProps } from "../types/clothing.types";
 import { useImageUpload } from "../hooks/useImageUpload";
 
 export default function ClothingImageUploader(props: ClothingImageUploaderProps) {

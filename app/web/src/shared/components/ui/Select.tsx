@@ -27,7 +27,7 @@ export default function Select({
         <select
           id={selectId}
           ref={ref}
-          className={`w-full h-11 px-3.5 bg-surface border rounded-xl text-sm text-charcoal appearance-none pr-10 transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent disabled:bg-cream disabled:cursor-not-allowed cursor-pointer shadow-xs ${
+          className={`w-full h-11 px-3.5 bg-surface dark:bg-[#18201a] border rounded-xl text-sm text-charcoal appearance-none pr-10 transition-colors focus:outline-none focus:ring-2 focus:ring-sage focus:border-transparent disabled:bg-cream disabled:cursor-not-allowed cursor-pointer shadow-xs ${
             error ? "border-rose-400 focus:ring-rose-400" : "border-warm-gray"
           } ${className}`}
           {...props}
