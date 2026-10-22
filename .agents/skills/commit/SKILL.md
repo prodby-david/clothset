@@ -13,7 +13,6 @@ Create clear, standard and consistent Git commits that strictly accurately descr
 
 - When the user wants to commit changes
 - When the user wants to prepare a commit message
-- When the user wants to review changes before committing
 - When the user wants to create a Git commit
 
 Do not create a commit when the user only asks to review changes or suggest a message.
