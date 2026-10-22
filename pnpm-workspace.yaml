@@ -1,12 +1,18 @@
 packages:
   - "packages/*"
-  - "apps/*"
+  - "api"
   - "app/*"
 
-onlyBuiltDependencies:
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "esbuild"
-  - "prisma"
-  - "unrs-resolver"
-  - "workerd"
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+  workerd: true
+  sharp: false
+
+permissions:
+  '@prisma/composer':
+    skills: true
+  '@prisma/orm-postgres':
+    skills: true
+  prisma:
+    skills: true
