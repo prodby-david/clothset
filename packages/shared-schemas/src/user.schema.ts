@@ -1,7 +1,13 @@
 import { z } from "zod";
 
-export const userPlanSchema = z.enum(["FREE", "PREMIUM"]);
+export const userPlanSchema = z.enum(["FREE", "PLUS", "ELITE"]);
 export type UserPlan = z.infer<typeof userPlanSchema>;
+
+export const TIER_LIMITS = {
+  FREE: { maxClosets: 2, maxItemsPerCloset: 20 },
+  PLUS: { maxClosets: 5, maxItemsPerCloset: 30 },
+  ELITE: { maxClosets: 8, maxItemsPerCloset: 50 },
+} as const;
 
 export const userSchema = z.object({
   id: z.string().uuid(),
@@ -20,6 +26,8 @@ export const signInSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 export type SignInInput = z.infer<typeof signInSchema>;
+export const loginSchema = signInSchema;
+export type LoginInput = SignInInput;
 
 export const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -27,6 +35,16 @@ export const signUpSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
 });
 export type SignUpInput = z.infer<typeof signUpSchema>;
+
+export const registerSchema = signUpSchema
+  .extend({
+    confirmPassword: z.string().min(8, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+export type RegisterInput = z.infer<typeof registerSchema>;
 
 export const createUserInputSchema = z.object({
   email: z.string().email("Please enter a valid email address"),

@@ -7,6 +7,7 @@ export const clothingCategorySchema = z.enum([
   "DRESSES",
   "FOOTWEAR",
   "ACCESSORIES",
+  "OTHER",
 ]);
 export type ClothingCategory = z.infer<typeof clothingCategorySchema>;
 
@@ -20,7 +21,7 @@ export const clothingSeasonSchema = z.enum([
 export type ClothingSeason = z.infer<typeof clothingSeasonSchema>;
 
 export const createClothingSchema = z.object({
-  closetId: z.string().uuid(),
+  closetId: z.string().uuid().optional(),
   name: z.string().min(2, "Garment name must be at least 2 characters"),
   category: clothingCategorySchema,
   subcategory: z.string().optional(),
