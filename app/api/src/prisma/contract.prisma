@@ -2,8 +2,9 @@
 
 enum UserPlan {
   @@type("pg/text@1")
-  FREE    = "FREE"
-  PREMIUM = "PREMIUM"
+  FREE  = "FREE"
+  PLUS  = "PLUS"
+  ELITE = "ELITE"
 }
 
 enum ClosetType {
@@ -24,6 +25,7 @@ enum ClothingCategory {
   DRESSES     = "DRESSES"
   FOOTWEAR    = "FOOTWEAR"
   ACCESSORIES = "ACCESSORIES"
+  OTHER       = "OTHER"
 }
 
 enum OutfitSlot {
@@ -33,6 +35,17 @@ enum OutfitSlot {
   OUTERWEAR = "OUTERWEAR"
   FOOTWEAR  = "FOOTWEAR"
   ACCESSORY = "ACCESSORY"
+}
+
+model Admin {
+  id           String            @id @default(uuid())
+  email        String            @unique
+  passwordHash String
+  name         String?
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+
+  @@index([email])
 }
 
 model User {
@@ -52,10 +65,25 @@ model User {
   @@index([email])
 }
 
+model WardrobeTemplate {
+  id          String            @id @default(uuid())
+  name        String
+  description String?
+  type        ClosetType        @default(EVERYDAY)
+  minTier     UserPlan          @default(FREE)
+  closets     Closet[]
+  createdAt   TimestamptzString @default(now())
+  updatedAt   temporal.updatedAtString()
+
+  @@index([minTier])
+}
+
 model Closet {
   id          String            @id @default(uuid())
   userId      String
   user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  templateId  String?
+  template    WardrobeTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
   name        String
   type        ClosetType        @default(EVERYDAY)
   description String?
@@ -66,6 +94,7 @@ model Closet {
   updatedAt   temporal.updatedAtString()
 
   @@index([userId])
+  @@index([templateId])
 }
 
 model ClothingItem {

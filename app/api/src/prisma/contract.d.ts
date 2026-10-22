@@ -18,9 +18,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'dc736e658690fcbaaab3d864e4b0a885f4134e8f49c069dbbe1073c169b303c6'>;
+  StorageHashBase<'cb2120536a11d5f89ea85e226b90f4175e7c6de653d584836eb97de819a34eeb'>;
 export type ExecutionHash =
-  ExecutionHashBase<'c200a655e80a823009c4cca82897310a38fa01791249fcd665b255402549e455'>;
+  ExecutionHashBase<'18cf18b2764e3a591d84015722a6cfc53bef5d8708433284798889fb2cb3fafb'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -234,12 +234,21 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 
 export type FieldOutputTypes = {
   readonly public: {
+    readonly Admin: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly name: CodecTypes['pg/text@1']['output'] | null;
+      readonly passwordHash: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    };
     readonly Closet: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly description: CodecTypes['pg/text@1']['output'] | null;
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly maxItems: CodecTypes['pg/int4@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
+      readonly templateId: CodecTypes['pg/text@1']['output'] | null;
       readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly userId: CodecTypes['pg/text@1']['output'];
@@ -248,7 +257,8 @@ export type FieldOutputTypes = {
       readonly aiMetadata: CodecTypes['pg/json@1']['output'] | null;
       readonly aiSuggested: CodecTypes['pg/bool@1']['output'];
       readonly brand: CodecTypes['pg/text@1']['output'] | null;
-      readonly category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES';
+      readonly category:
+        'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES' | 'OTHER';
       readonly closetId: CodecTypes['pg/text@1']['output'];
       readonly color: CodecTypes['pg/text@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -292,21 +302,39 @@ export type FieldOutputTypes = {
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'] | null;
       readonly passwordHash: CodecTypes['pg/text@1']['output'] | null;
-      readonly plan: 'FREE' | 'PREMIUM';
+      readonly plan: 'FREE' | 'PLUS' | 'ELITE';
       readonly provider: CodecTypes['pg/text@1']['output'] | null;
       readonly providerId: CodecTypes['pg/text@1']['output'] | null;
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    };
+    readonly WardrobeTemplate: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly description: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly minTier: 'FREE' | 'PLUS' | 'ELITE';
+      readonly name: CodecTypes['pg/text@1']['output'];
+      readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
   };
 };
 export type FieldInputTypes = {
   readonly public: {
+    readonly Admin: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly name: CodecTypes['pg/text@1']['input'] | null;
+      readonly passwordHash: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
+    };
     readonly Closet: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly description: CodecTypes['pg/text@1']['input'] | null;
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly maxItems: CodecTypes['pg/int4@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
+      readonly templateId: CodecTypes['pg/text@1']['input'] | null;
       readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly userId: CodecTypes['pg/text@1']['input'];
@@ -315,7 +343,8 @@ export type FieldInputTypes = {
       readonly aiMetadata: CodecTypes['pg/json@1']['input'] | null;
       readonly aiSuggested: CodecTypes['pg/bool@1']['input'];
       readonly brand: CodecTypes['pg/text@1']['input'] | null;
-      readonly category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES';
+      readonly category:
+        'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES' | 'OTHER';
       readonly closetId: CodecTypes['pg/text@1']['input'];
       readonly color: CodecTypes['pg/text@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
@@ -359,21 +388,39 @@ export type FieldInputTypes = {
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'] | null;
       readonly passwordHash: CodecTypes['pg/text@1']['input'] | null;
-      readonly plan: 'FREE' | 'PREMIUM';
+      readonly plan: 'FREE' | 'PLUS' | 'ELITE';
       readonly provider: CodecTypes['pg/text@1']['input'] | null;
       readonly providerId: CodecTypes['pg/text@1']['input'] | null;
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
+    };
+    readonly WardrobeTemplate: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly description: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly minTier: 'FREE' | 'PLUS' | 'ELITE';
+      readonly name: CodecTypes['pg/text@1']['input'];
+      readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
   };
 };
 export type StorageColumnTypes = {
   readonly public: {
+    readonly Admin: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly name: CodecTypes['pg/text@1']['output'] | null;
+      readonly passwordHash: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    };
     readonly Closet: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly description: CodecTypes['pg/text@1']['output'] | null;
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly maxItems: CodecTypes['pg/int4@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
+      readonly templateId: CodecTypes['pg/text@1']['output'] | null;
       readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly userId: CodecTypes['pg/text@1']['output'];
@@ -382,7 +429,8 @@ export type StorageColumnTypes = {
       readonly aiMetadata: CodecTypes['pg/json@1']['output'] | null;
       readonly aiSuggested: CodecTypes['pg/bool@1']['output'];
       readonly brand: CodecTypes['pg/text@1']['output'] | null;
-      readonly category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES';
+      readonly category:
+        'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES' | 'OTHER';
       readonly closetId: CodecTypes['pg/text@1']['output'];
       readonly color: CodecTypes['pg/text@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -426,21 +474,39 @@ export type StorageColumnTypes = {
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'] | null;
       readonly passwordHash: CodecTypes['pg/text@1']['output'] | null;
-      readonly plan: 'FREE' | 'PREMIUM';
+      readonly plan: 'FREE' | 'PLUS' | 'ELITE';
       readonly provider: CodecTypes['pg/text@1']['output'] | null;
       readonly providerId: CodecTypes['pg/text@1']['output'] | null;
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    };
+    readonly WardrobeTemplate: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly description: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly minTier: 'FREE' | 'PLUS' | 'ELITE';
+      readonly name: CodecTypes['pg/text@1']['output'];
+      readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
   };
 };
 export type StorageColumnInputTypes = {
   readonly public: {
+    readonly Admin: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly name: CodecTypes['pg/text@1']['input'] | null;
+      readonly passwordHash: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
+    };
     readonly Closet: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly description: CodecTypes['pg/text@1']['input'] | null;
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly maxItems: CodecTypes['pg/int4@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
+      readonly templateId: CodecTypes['pg/text@1']['input'] | null;
       readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly userId: CodecTypes['pg/text@1']['input'];
@@ -449,7 +515,8 @@ export type StorageColumnInputTypes = {
       readonly aiMetadata: CodecTypes['pg/json@1']['input'] | null;
       readonly aiSuggested: CodecTypes['pg/bool@1']['input'];
       readonly brand: CodecTypes['pg/text@1']['input'] | null;
-      readonly category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES';
+      readonly category:
+        'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES' | 'OTHER';
       readonly closetId: CodecTypes['pg/text@1']['input'];
       readonly color: CodecTypes['pg/text@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
@@ -493,34 +560,54 @@ export type StorageColumnInputTypes = {
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'] | null;
       readonly passwordHash: CodecTypes['pg/text@1']['input'] | null;
-      readonly plan: 'FREE' | 'PREMIUM';
+      readonly plan: 'FREE' | 'PLUS' | 'ELITE';
       readonly provider: CodecTypes['pg/text@1']['input'] | null;
       readonly providerId: CodecTypes['pg/text@1']['input'] | null;
+      readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
+    };
+    readonly WardrobeTemplate: {
+      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly description: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly minTier: 'FREE' | 'PLUS' | 'ELITE';
+      readonly name: CodecTypes['pg/text@1']['input'];
+      readonly type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
   };
 };
 
 export namespace Models {
+  export type public_Admin = {
+    createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    email: CodecTypes['pg/text@1']['output'];
+    id: CodecTypes['pg/text@1']['output'];
+    name: CodecTypes['pg/text@1']['output'] | null;
+    passwordHash: CodecTypes['pg/text@1']['output'];
+    updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    readonly [RelationKeys]?: never;
+  };
   export type public_Closet = {
     createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
     description: CodecTypes['pg/text@1']['output'] | null;
     id: CodecTypes['pg/text@1']['output'];
     maxItems: CodecTypes['pg/int4@1']['output'];
     name: CodecTypes['pg/text@1']['output'];
+    templateId: CodecTypes['pg/text@1']['output'] | null;
     type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     userId: CodecTypes['pg/text@1']['output'];
     clothes: public_ClothingItem[];
     outfits: public_Outfit[];
+    template: public_WardrobeTemplate | null;
     user: public_User;
-    readonly [RelationKeys]?: 'clothes' | 'outfits' | 'user';
+    readonly [RelationKeys]?: 'clothes' | 'outfits' | 'template' | 'user';
   };
   export type public_ClothingItem = {
     aiMetadata: CodecTypes['pg/json@1']['output'] | null;
     aiSuggested: CodecTypes['pg/bool@1']['output'];
     brand: CodecTypes['pg/text@1']['output'] | null;
-    category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES';
+    category: 'TOPS' | 'BOTTOMS' | 'OUTERWEAR' | 'DRESSES' | 'FOOTWEAR' | 'ACCESSORIES' | 'OTHER';
     closetId: CodecTypes['pg/text@1']['output'];
     color: CodecTypes['pg/text@1']['output'] | null;
     createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -575,7 +662,7 @@ export namespace Models {
     id: CodecTypes['pg/text@1']['output'];
     name: CodecTypes['pg/text@1']['output'] | null;
     passwordHash: CodecTypes['pg/text@1']['output'] | null;
-    plan: 'FREE' | 'PREMIUM';
+    plan: 'FREE' | 'PLUS' | 'ELITE';
     provider: CodecTypes['pg/text@1']['output'] | null;
     providerId: CodecTypes['pg/text@1']['output'] | null;
     updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -584,15 +671,28 @@ export namespace Models {
     outfits: public_Outfit[];
     readonly [RelationKeys]?: 'closets' | 'clothes' | 'outfits';
   };
+  export type public_WardrobeTemplate = {
+    createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    description: CodecTypes['pg/text@1']['output'] | null;
+    id: CodecTypes['pg/text@1']['output'];
+    minTier: 'FREE' | 'PLUS' | 'ELITE';
+    name: CodecTypes['pg/text@1']['output'];
+    type: 'EVERYDAY' | 'WORK' | 'FORMAL' | 'SEASONAL' | 'CAPSULE' | 'CUSTOM';
+    updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
+    closets: public_Closet[];
+    readonly [RelationKeys]?: 'closets';
+  };
 }
 
 export declare const models: {
   public: {
+    Admin: Models.public_Admin;
     Closet: Models.public_Closet;
     ClothingItem: Models.public_ClothingItem;
     Outfit: Models.public_Outfit;
     OutfitItem: Models.public_OutfitItem;
     User: Models.public_User;
+    WardrobeTemplate: Models.public_WardrobeTemplate;
   };
 };
 
@@ -614,6 +714,58 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
+            readonly Admin: {
+              columns: {
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly email: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly name: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly passwordHash: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly updatedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [{ readonly columns: readonly ['email'] }];
+              indexes: readonly [
+                {
+                  readonly name: 'Admin_email_idx_46df9cad';
+                  readonly prefix: 'Admin_email_idx';
+                  readonly columns: readonly ['email'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [];
+            };
             readonly Closet: {
               columns: {
                 readonly createdAt: {
@@ -651,6 +803,12 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
+                readonly templateId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
                 readonly type: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -678,6 +836,12 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
+                  readonly name: 'Closet_templateId_idx_19e0d972';
+                  readonly prefix: 'Closet_templateId_idx';
+                  readonly columns: readonly ['templateId'];
+                  readonly unique: false;
+                },
+                {
                   readonly name: 'Closet_userId_idx_a489d58a';
                   readonly prefix: 'Closet_userId_idx';
                   readonly columns: readonly ['userId'];
@@ -694,6 +858,18 @@ type ContractBase = Omit<
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
                     readonly tableName: 'User';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'Closet';
+                    readonly columns: readonly ['templateId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'WardrobeTemplate';
                     readonly columns: readonly ['id'];
                   };
                 },
@@ -1168,6 +1344,72 @@ type ContractBase = Omit<
               ];
               foreignKeys: readonly [];
             };
+            readonly WardrobeTemplate: {
+              columns: {
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly description: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly minTier: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'FREE'>;
+                  };
+                  readonly many: false;
+                };
+                readonly name: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly type: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'EVERYDAY'>;
+                  };
+                  readonly many: false;
+                };
+                readonly updatedAt: {
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'WardrobeTemplate_minTier_idx_7b36546a';
+                  readonly prefix: 'WardrobeTemplate_minTier_idx';
+                  readonly columns: readonly ['minTier'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [];
+            };
           };
           readonly valueSet: {
             readonly ClosetType: {
@@ -1190,6 +1432,7 @@ type ContractBase = Omit<
                 'DRESSES',
                 'FOOTWEAR',
                 'ACCESSORIES',
+                'OTHER',
               ];
             };
             readonly OutfitSlot: {
@@ -1198,7 +1441,7 @@ type ContractBase = Omit<
             };
             readonly UserPlan: {
               readonly kind: 'valueSet';
-              readonly values: readonly ['FREE', 'PREMIUM'];
+              readonly values: readonly ['FREE', 'PLUS', 'ELITE'];
             };
           };
         };
@@ -1211,6 +1454,7 @@ type ContractBase = Omit<
   readonly target: 'postgres';
   readonly targetFamily: 'sql';
   readonly roots: {
+    readonly Admin: { readonly namespace: 'public' & NamespaceId; readonly model: 'Admin' };
     readonly Closet: { readonly namespace: 'public' & NamespaceId; readonly model: 'Closet' };
     readonly ClothingItem: {
       readonly namespace: 'public' & NamespaceId;
@@ -1222,11 +1466,62 @@ type ContractBase = Omit<
       readonly model: 'OutfitItem';
     };
     readonly User: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+    readonly WardrobeTemplate: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'WardrobeTemplate';
+    };
   };
   readonly domain: {
     readonly namespaces: {
       readonly public: {
         readonly models: {
+          readonly Admin: {
+            readonly fields: {
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly email: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly name: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly passwordHash: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+            };
+            readonly relations: Record<string, never>;
+            readonly storage: {
+              readonly table: 'Admin';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly email: { readonly column: 'email' };
+                readonly id: { readonly column: 'id' };
+                readonly name: { readonly column: 'name' };
+                readonly passwordHash: { readonly column: 'passwordHash' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
+            };
+          };
           readonly Closet: {
             readonly fields: {
               readonly createdAt: {
@@ -1250,6 +1545,10 @@ type ContractBase = Omit<
               };
               readonly name: {
                 readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly templateId: {
+                readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly type: {
@@ -1291,6 +1590,18 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['closetId'];
                 };
               };
+              readonly template: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'WardrobeTemplate';
+                };
+                readonly cardinality: 'N:1';
+                readonly nullable: true;
+                readonly on: {
+                  readonly localFields: readonly ['templateId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
               readonly user: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
                 readonly cardinality: 'N:1';
@@ -1310,6 +1621,7 @@ type ContractBase = Omit<
                 readonly id: { readonly column: 'id' };
                 readonly maxItems: { readonly column: 'maxItems' };
                 readonly name: { readonly column: 'name' };
+                readonly templateId: { readonly column: 'templateId' };
                 readonly type: { readonly column: 'type' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
                 readonly userId: { readonly column: 'userId' };
@@ -1733,6 +2045,70 @@ type ContractBase = Omit<
               };
             };
           };
+          readonly WardrobeTemplate: {
+            readonly fields: {
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly description: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly minTier: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly name: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly type: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+            };
+            readonly relations: {
+              readonly closets: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Closet';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['templateId'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'WardrobeTemplate';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly description: { readonly column: 'description' };
+                readonly id: { readonly column: 'id' };
+                readonly minTier: { readonly column: 'minTier' };
+                readonly name: { readonly column: 'name' };
+                readonly type: { readonly column: 'type' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
+            };
+          };
         };
         readonly enum: {
           readonly ClosetType: {
@@ -1755,6 +2131,7 @@ type ContractBase = Omit<
               { readonly name: 'DRESSES'; readonly value: 'DRESSES' },
               { readonly name: 'FOOTWEAR'; readonly value: 'FOOTWEAR' },
               { readonly name: 'ACCESSORIES'; readonly value: 'ACCESSORIES' },
+              { readonly name: 'OTHER'; readonly value: 'OTHER' },
             ];
           };
           readonly OutfitSlot: {
@@ -1771,7 +2148,8 @@ type ContractBase = Omit<
             readonly codecId: 'pg/text@1';
             readonly members: readonly [
               { readonly name: 'FREE'; readonly value: 'FREE' },
-              { readonly name: 'PREMIUM'; readonly value: 'PREMIUM' },
+              { readonly name: 'PLUS'; readonly value: 'PLUS' },
+              { readonly name: 'ELITE'; readonly value: 'ELITE' },
             ];
           };
         };
@@ -1810,6 +2188,23 @@ type ContractBase = Omit<
     readonly executionHash: ExecutionHash;
     readonly mutations: {
       readonly defaults: readonly [
+        {
+          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
+          readonly ref: {
+            readonly entry: 'Admin';
+            readonly field: 'id';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
+          readonly onUpdate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
+          readonly ref: {
+            readonly entry: 'Admin';
+            readonly field: 'updatedAt';
+            readonly namespace: 'public';
+          };
+        },
         {
           readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
           readonly ref: {
@@ -1882,6 +2277,23 @@ type ContractBase = Omit<
           readonly onUpdate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'User';
+            readonly field: 'updatedAt';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
+          readonly ref: {
+            readonly entry: 'WardrobeTemplate';
+            readonly field: 'id';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
+          readonly onUpdate: { readonly id: 'timestampNow'; readonly kind: 'generator' };
+          readonly ref: {
+            readonly entry: 'WardrobeTemplate';
             readonly field: 'updatedAt';
             readonly namespace: 'public';
           };

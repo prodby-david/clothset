@@ -4,6 +4,10 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
+    "Admin": {
+      "model": "Admin",
+      "namespace": "public"
+    },
     "Closet": {
       "model": "Closet",
       "namespace": "public"
@@ -22,6 +26,10 @@
     },
     "User": {
       "model": "User",
+      "namespace": "public"
+    },
+    "WardrobeTemplate": {
+      "model": "WardrobeTemplate",
       "namespace": "public"
     }
   },
@@ -84,6 +92,10 @@
               {
                 "name": "ACCESSORIES",
                 "value": "ACCESSORIES"
+              },
+              {
+                "name": "OTHER",
+                "value": "OTHER"
               }
             ]
           },
@@ -120,13 +132,88 @@
                 "value": "FREE"
               },
               {
-                "name": "PREMIUM",
-                "value": "PREMIUM"
+                "name": "PLUS",
+                "value": "PLUS"
+              },
+              {
+                "name": "ELITE",
+                "value": "ELITE"
               }
             ]
           }
         },
         "models": {
+          "Admin": {
+            "fields": {
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "email": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "name": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "passwordHash": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "email": {
+                  "column": "email"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "name": {
+                  "column": "name"
+                },
+                "passwordHash": {
+                  "column": "passwordHash"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                }
+              },
+              "namespaceId": "public",
+              "table": "Admin"
+            }
+          },
           "Closet": {
             "fields": {
               "createdAt": {
@@ -159,6 +246,13 @@
               },
               "name": {
                 "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "templateId": {
+                "nullable": true,
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
@@ -223,6 +317,22 @@
                   "namespace": "public"
                 }
               },
+              "template": {
+                "cardinality": "N:1",
+                "nullable": true,
+                "on": {
+                  "localFields": [
+                    "templateId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "WardrobeTemplate",
+                  "namespace": "public"
+                }
+              },
               "user": {
                 "cardinality": "N:1",
                 "nullable": false,
@@ -256,6 +366,9 @@
                 },
                 "name": {
                   "column": "name"
+                },
+                "templateId": {
+                  "column": "templateId"
                 },
                 "type": {
                   "column": "type"
@@ -963,6 +1076,115 @@
               "namespaceId": "public",
               "table": "User"
             }
+          },
+          "WardrobeTemplate": {
+            "fields": {
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "description": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "minTier": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "UserPlan",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "name": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "type": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "ClosetType",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "closets": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "templateId"
+                  ]
+                },
+                "to": {
+                  "model": "Closet",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "description": {
+                  "column": "description"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "minTier": {
+                  "column": "minTier"
+                },
+                "name": {
+                  "column": "name"
+                },
+                "type": {
+                  "column": "type"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                }
+              },
+              "namespaceId": "public",
+              "table": "WardrobeTemplate"
+            }
           }
         }
       }
@@ -973,6 +1195,67 @@
       "public": {
         "entries": {
           "table": {
+            "Admin": {
+              "columns": {
+                "createdAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "email": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "passwordHash": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "email"
+                  ],
+                  "name": "Admin_email_idx_46df9cad",
+                  "prefix": "Admin_email_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "email"
+                  ]
+                }
+              ]
+            },
             "Closet": {
               "checks": [
                 {
@@ -1014,6 +1297,11 @@
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
+                },
+                "templateId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
                 },
                 "type": {
                   "codecId": "pg/text@1",
@@ -1058,9 +1346,34 @@
                     "namespaceId": "public",
                     "tableName": "User"
                   }
+                },
+                {
+                  "onDelete": "setNull",
+                  "source": {
+                    "columns": [
+                      "templateId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "Closet"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "WardrobeTemplate"
+                  }
                 }
               ],
               "indexes": [
+                {
+                  "columns": [
+                    "templateId"
+                  ],
+                  "name": "Closet_templateId_idx_19e0d972",
+                  "prefix": "Closet_templateId_idx",
+                  "unique": false
+                },
                 {
                   "columns": [
                     "userId"
@@ -1080,8 +1393,8 @@
             "ClothingItem": {
               "checks": [
                 {
-                  "expression": "\"category\" IN ('TOPS', 'BOTTOMS', 'OUTERWEAR', 'DRESSES', 'FOOTWEAR', 'ACCESSORIES')",
-                  "name": "ClothingItem_category_check_ef45f730",
+                  "expression": "\"category\" IN ('TOPS', 'BOTTOMS', 'OUTERWEAR', 'DRESSES', 'FOOTWEAR', 'ACCESSORIES', 'OTHER')",
+                  "name": "ClothingItem_category_check_4ab163ae",
                   "prefix": "ClothingItem_category_check"
                 },
                 {
@@ -1553,8 +1866,8 @@
             "User": {
               "checks": [
                 {
-                  "expression": "\"plan\" IN ('FREE', 'PREMIUM')",
-                  "name": "User_plan_check_c89db803",
+                  "expression": "\"plan\" IN ('FREE', 'PLUS', 'ELITE')",
+                  "name": "User_plan_check_ee4978b4",
                   "prefix": "User_plan_check"
                 }
               ],
@@ -1642,6 +1955,98 @@
                   ]
                 }
               ]
+            },
+            "WardrobeTemplate": {
+              "checks": [
+                {
+                  "expression": "\"minTier\" IN ('FREE', 'PLUS', 'ELITE')",
+                  "name": "WardrobeTemplate_minTier_check_8a519d25",
+                  "prefix": "WardrobeTemplate_minTier_check"
+                },
+                {
+                  "expression": "\"type\" IN ('EVERYDAY', 'WORK', 'FORMAL', 'SEASONAL', 'CAPSULE', 'CUSTOM')",
+                  "name": "WardrobeTemplate_type_check_3cbddd83",
+                  "prefix": "WardrobeTemplate_type_check"
+                }
+              ],
+              "columns": {
+                "createdAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "description": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "minTier": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "FREE"
+                  },
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "UserPlan",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "type": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "EVERYDAY"
+                  },
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ClosetType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "minTier"
+                  ],
+                  "name": "WardrobeTemplate_minTier_idx_7b36546a",
+                  "prefix": "WardrobeTemplate_minTier_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
             }
           },
           "valueSet": {
@@ -1664,7 +2069,8 @@
                 "OUTERWEAR",
                 "DRESSES",
                 "FOOTWEAR",
-                "ACCESSORIES"
+                "ACCESSORIES",
+                "OTHER"
               ]
             },
             "OutfitSlot": {
@@ -1681,7 +2087,8 @@
               "kind": "valueSet",
               "values": [
                 "FREE",
-                "PREMIUM"
+                "PLUS",
+                "ELITE"
               ]
             }
           }
@@ -1690,12 +2097,38 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "dc736e658690fcbaaab3d864e4b0a885f4134e8f49c069dbbe1073c169b303c6"
+    "storageHash": "cb2120536a11d5f89ea85e226b90f4175e7c6de653d584836eb97de819a34eeb"
   },
   "execution": {
-    "executionHash": "c200a655e80a823009c4cca82897310a38fa01791249fcd665b255402549e455",
+    "executionHash": "18cf18b2764e3a591d84015722a6cfc53bef5d8708433284798889fb2cb3fafb",
     "mutations": {
       "defaults": [
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "Admin",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "Admin",
+            "field": "updatedAt",
+            "namespace": "public"
+          }
+        },
         {
           "onCreate": {
             "id": "uuidv4",
@@ -1807,6 +2240,32 @@
           },
           "ref": {
             "entry": "User",
+            "field": "updatedAt",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "WardrobeTemplate",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "WardrobeTemplate",
             "field": "updatedAt",
             "namespace": "public"
           }

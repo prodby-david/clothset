@@ -31,7 +31,7 @@ export class AuthController {
     private readonly tokenService: TokenService,
   ) {}
 
-  @Post("signup")
+  @Post(["signup", "register"])
   @UsePipes(new ZodValidationPipe(signUpSchema))
   async signUp(
     @Body() body: SignUpInput,
@@ -56,7 +56,7 @@ export class AuthController {
     };
   }
 
-  @Post("signin")
+  @Post(["signin", "login"])
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ZodValidationPipe(signInSchema))
   async signIn(
@@ -115,7 +115,7 @@ export class AuthController {
     };
   }
 
-  @Post("signout")
+  @Post(["signout", "logout"])
   @HttpCode(HttpStatus.OK)
   async signOut(@Res({ passthrough: true }) res: Response) {
     const clearOptions = this.tokenService.getClearCookieOptions();
