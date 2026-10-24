@@ -12,15 +12,15 @@ import {
 } from "@nestjs/common";
 import type { Request } from "express";
 import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
-import { AdminAuthGuard } from "../admin-auth/admin-auth.guard";
+import { AdminAuthGuard } from "../../common/guards/admin-auth.guard";
 import { ZodValidationPipe } from "../../common/pipes/zod-validation.pipe";
 import {
   createWardrobeTemplateSchema,
   updateWardrobeTemplateSchema,
   type CreateWardrobeTemplateInput,
   type UpdateWardrobeTemplateInput,
-  type UserPlan,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/closet.schema";
+import type { UserPlan } from "@clothset/shared-schemas/user.schema";
 import { WardrobeTemplateService } from "./wardrobe-template.service";
 
 @Controller()

@@ -4,19 +4,20 @@ import {
   Get,
   Body,
   Res,
-  Req,
   UseGuards,
   UsePipes,
   HttpCode,
   HttpStatus,
 } from "@nestjs/common";
-import type { Request, Response } from "express";
-import { adminSignInSchema } from "@clothset/shared-schemas";
-import type { AdminSignInInput } from "@clothset/shared-schemas";
+import type { Response } from "express";
+import { adminSignInSchema } from "@clothset/shared-schemas/admin.schema";
+import type { AdminSignInInput } from "@clothset/shared-schemas/admin.schema";
 import { AdminAuthService } from "./admin-auth.service";
 import { TokenService } from "../token/token.service";
 import { ADMIN_ACCESS_TOKEN_COOKIE } from "../token/token.types";
-import { AdminAuthGuard } from "./admin-auth.guard";
+import type { AuthenticatedAdmin } from "../token/token.types";
+import { AdminAuthGuard } from "../../common/guards/admin-auth.guard";
+import { CurrentAdmin } from "../../common/decorators/current-admin.decorator";
 import { ZodValidationPipe } from "../../common/pipes/zod-validation.pipe";
 
 @Controller("admin/auth")
@@ -57,7 +58,7 @@ export class AdminAuthController {
 
   @Get("me")
   @UseGuards(AdminAuthGuard)
-  async getMe(@Req() req: Request & { admin: { id: string; email: string; name: string | null } }) {
-    return req.admin;
+  async getMe(@CurrentAdmin() admin: AuthenticatedAdmin) {
+    return admin;
   }
 }

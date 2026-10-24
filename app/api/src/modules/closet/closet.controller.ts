@@ -19,7 +19,7 @@ import {
   type CreateClosetInput,
   type UpdateClosetInput,
   type ActivateTemplateInput,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/closet.schema";
 import { ClosetService } from "./closet.service";
 
 @Controller("closets")

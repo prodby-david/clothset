@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import type { CreateClosetInput, UpdateClosetInput } from "@clothset/shared-schemas";
+import type { CreateClosetInput, UpdateClosetInput } from "@clothset/shared-schemas/closet.schema";
 
 @Injectable()
 export class ClosetRepository {

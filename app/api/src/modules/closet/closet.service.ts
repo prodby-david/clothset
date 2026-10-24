@@ -11,9 +11,11 @@ import { isTierEligible } from "../wardrobe-template/wardrobe-template.service";
 import {
   TIER_LIMITS,
   type UserPlan,
-  type CreateClosetInput,
-  type UpdateClosetInput,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/user.schema";
+import type {
+  CreateClosetInput,
+  UpdateClosetInput,
+} from "@clothset/shared-schemas/closet.schema";
 
 @Injectable()
 export class ClosetService {

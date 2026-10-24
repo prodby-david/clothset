@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import bcrypt from "bcryptjs";
-import type { SignInInput, SignUpInput } from "@clothset/shared-schemas";
+import type { SignInInput, SignUpInput } from "@clothset/shared-schemas/user.schema";
 import { AuthRepository } from "./auth.repository";
 import { TokenService } from "../token/token.service";
 import type { TokenPair, AuthenticatedUser } from "../token/token.types";

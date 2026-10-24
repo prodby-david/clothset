@@ -4,7 +4,7 @@ import { TokenModule } from "../token/token.module";
 import { AdminAuthRepository } from "./admin-auth.repository";
 import { AdminAuthService } from "./admin-auth.service";
 import { AdminAuthController } from "./admin-auth.controller";
-import { AdminAuthGuard } from "./admin-auth.guard";
+import { AdminAuthGuard } from "../../common/guards/admin-auth.guard";
 
 @Module({
   imports: [PrismaModule, TokenModule],

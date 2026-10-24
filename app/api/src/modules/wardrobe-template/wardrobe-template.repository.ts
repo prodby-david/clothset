@@ -3,7 +3,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import type {
   CreateWardrobeTemplateInput,
   UpdateWardrobeTemplateInput,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/closet.schema";
 
 @Injectable()
 export class WardrobeTemplateRepository {

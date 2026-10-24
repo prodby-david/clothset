@@ -16,7 +16,7 @@
     "outDir": "dist",
     "rootDir": "../../",
     "paths": {
-      "@clothset/shared-schemas": ["../../packages/shared-schemas/src/index.ts"]
+      "@clothset/shared-schemas/*": ["../../packages/shared-schemas/src/*"]
     },
     "types": [
       "node"

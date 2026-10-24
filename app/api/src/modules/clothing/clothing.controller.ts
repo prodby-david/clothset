@@ -19,7 +19,7 @@ import {
   type ClothingCategory,
   type CreateClothingInput,
   type UpdateClothingInput,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/clothing.schema";
 import { ClothingService } from "./clothing.service";
 
 @Controller()

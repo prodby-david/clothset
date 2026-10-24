@@ -10,7 +10,7 @@ import type {
   ClothingCategory,
   CreateClothingInput,
   UpdateClothingInput,
-} from "@clothset/shared-schemas";
+} from "@clothset/shared-schemas/clothing.schema";
 
 @Injectable()
 export class ClothingService {

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import type { CreateUserInput, UpdateUserInput } from "@clothset/shared-schemas";
+import type { CreateUserInput, UpdateUserInput } from "@clothset/shared-schemas/user.schema";
 
 @Injectable()
 export class AuthRepository {

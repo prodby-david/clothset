@@ -12,8 +12,8 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import type { Request, Response } from "express";
-import { signInSchema, signUpSchema } from "@clothset/shared-schemas";
-import type { SignInInput, SignUpInput } from "@clothset/shared-schemas";
+import { signInSchema, signUpSchema } from "@clothset/shared-schemas/user.schema";
+import type { SignInInput, SignUpInput } from "@clothset/shared-schemas/user.schema";
 import { AuthService } from "./auth.service";
 import { TokenService } from "../token/token.service";
 import {
@@ -31,7 +31,7 @@ export class AuthController {
     private readonly tokenService: TokenService,
   ) {}
 
-  @Post(["signup", "register"])
+  @Post("register")
   @UsePipes(new ZodValidationPipe(signUpSchema))
   async signUp(
     @Body() body: SignUpInput,
@@ -56,7 +56,7 @@ export class AuthController {
     };
   }
 
-  @Post(["signin", "login"])
+  @Post("login")
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ZodValidationPipe(signInSchema))
   async signIn(
