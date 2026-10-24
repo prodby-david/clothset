@@ -14,6 +14,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import Button from "@/shared/components/ui/Button";
 import Badge from "@/shared/components/ui/Badge";
+import HeroPieceCard from "./HeroPieceCard";
 import { LandingHeroContentProps } from "../types/landing.types";
 import { useLandingHero } from "../hooks/useLandingHero";
 
@@ -44,15 +45,15 @@ export default function LandingHeroContent({
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pale-sage text-forest dark:text-sage text-xs font-semibold mb-6 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-sage" />
-            <span>Digital Wardrobe & Drawer Manager</span>
+            <span>Mindful Digital Wardrobe</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-charcoal leading-[1.14]">
-            Organize your clothes into intentional wardrobes and drawers.
+            Intentional wardrobes for conscious dressers.
           </h1>
 
           <p className="mt-5 text-sm sm:text-base md:text-lg text-muted-gray max-w-2xl leading-relaxed">
-            Catalog your personal collections, track capacity limits, and filter seamlessly across clothing, footwear, and accessories.
+            Curate intentional capsule collections, track item capacity limits, and style daily outfits strictly from clothes you actually own.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -76,15 +77,15 @@ export default function LandingHeroContent({
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-gray">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-forest dark:text-sage" />
-              <span>No credit card required</span>
+              <span>100% grounded in clothes you own</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-forest dark:text-sage" />
-              <span>Your wardrobe stays 100% private</span>
+              <span>Strict capacity limits that prevent clutter</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-forest dark:text-sage" />
-              <span>Capacity tracking & category filtering</span>
+              <span>Private & encrypted wardrobe data</span>
             </div>
           </div>
         </motion.div>
@@ -165,27 +166,7 @@ export default function LandingHeroContent({
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
                 >
                   {activeOutfit.map((piece) => (
-                    <div
-                      key={piece.id}
-                      className="p-5 rounded-2xl border border-warm-gray bg-surface flex flex-col justify-between shadow-xs hover:border-sage/50 transition-all min-h-[140px]"
-                    >
-                      <div>
-                        <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-forest dark:text-sage px-2.5 py-1 rounded-md bg-pale-sage/60 mb-3">
-                          {piece.slotLabel}
-                        </span>
-
-                        <h3 className="text-sm sm:text-base font-bold text-charcoal leading-snug">
-                          {piece.name}
-                        </h3>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-warm-gray/70 flex items-center justify-between text-xs">
-                        <span className="text-muted-gray text-[11px]">Color</span>
-                        <span className="font-semibold text-charcoal">
-                          {piece.color}
-                        </span>
-                      </div>
-                    </div>
+                    <HeroPieceCard key={piece.id} piece={piece} />
                   ))}
                 </motion.div>
               </AnimatePresence>

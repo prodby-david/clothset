@@ -23,14 +23,13 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <Badge variant="accent" className="mb-3">
-            Wardrobe Features
+            Conscious Wardrobe System
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-charcoal">
-            Designed to make getting dressed easy every morning.
+            Intentional features for effortless everyday dressing.
           </h2>
           <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-xl mx-auto">
-            Clothset helps you organize your clothes and gives you fresh outfit ideas
-            from what you already own.
+            Clothset helps you curate what you own, honor capacity limits, and discover fresh outfit ideas from your existing wardrobe.
           </p>
         </motion.div>
 
@@ -48,11 +47,11 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
                 <Layers className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-charcoal">
-                Custom Closets & Wardrobes
+                Intentional Capsule Wardrobes
               </h3>
               <p className="mt-3 text-sm text-muted-gray leading-relaxed">
-                Group items into collections for work, weekend trips, or seasonal rotations.
-                Find exactly what to wear in seconds.
+                Curate distinct collections for work, weekend, and seasonal capsules.
+                Stay within mindful limits and find what you love in seconds.
               </p>
             </div>
 
@@ -89,8 +88,8 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
                 Smart Scanner & Auto-Tagging
               </h3>
               <p className="mt-3 text-sm text-muted-gray leading-relaxed">
-                Snap or upload a photo. Clothset automatically detects colors,
-                clothing categories, and seasons for you in seconds.
+                Digitize each garment effortlessly. Automatically extract silhouette,
+                color palette, and season coordinates without manual spreadsheets.
               </p>
             </div>
 
@@ -128,11 +127,11 @@ export default function LandingFeatures({ className = "" }: LandingFeaturesProps
                 <Compass className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-charcoal">
-                Daily Outfit Ideas
+                Grounded Outfit Discovery
               </h3>
               <p className="mt-3 text-sm text-muted-gray leading-relaxed">
-                Get matched outfit combinations ready for your day. Clothset
-                uses only clothes you own and never makes up items you do not have.
+                Discover high-harmony outfits styled strictly from your wardrobe.
+                Zero fabricated suggestions, zero pressure to buy new clothes.
               </p>
             </div>
 

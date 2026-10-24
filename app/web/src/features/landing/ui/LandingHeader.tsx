@@ -61,19 +61,11 @@ export default function LandingHeader({ className = "" }: LandingHeaderProps) {
               </Button>
             </Link>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/sign-in"
-                className="text-sm font-medium text-muted-gray hover:text-charcoal px-2 py-1.5 transition-colors"
-              >
-                Sign in
-              </Link>
-              <Link href="/sign-up">
-                <Button variant="primary" size="sm" className="text-sm h-9 px-4 shadow-xs">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
+            <Link href="/sign-up">
+              <Button variant="primary" size="sm" className="text-sm h-9 px-4 shadow-xs">
+                Get Started
+              </Button>
+            </Link>
           )}
         </div>
 
@@ -137,20 +129,11 @@ export default function LandingHeader({ className = "" }: LandingHeaderProps) {
                 </Button>
               </Link>
             ) : (
-              <div className="flex flex-col gap-2">
-                <Link
-                  href="/sign-in"
-                  onClick={closeMenu}
-                  className="w-full text-center py-2 text-sm font-medium text-muted-gray hover:text-charcoal transition-colors"
-                >
-                  Sign in
-                </Link>
-                <Link href="/sign-up" onClick={closeMenu}>
-                  <Button variant="primary" size="sm" className="w-full justify-center text-sm h-9">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
+              <Link href="/sign-up" onClick={closeMenu}>
+                <Button variant="primary" size="sm" className="w-full justify-center text-sm h-9">
+                  Get Started
+                </Button>
+              </Link>
             )}
           </div>
         </div>

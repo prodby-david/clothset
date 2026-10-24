@@ -24,6 +24,7 @@ export interface LayeredOutfitPiece {
   slotLabel: string;
   name: string;
   color: string;
+  imageUrl: string;
 }
 
 export interface CapsulePreset {
@@ -41,6 +42,11 @@ export interface LandingHeaderProps {
 }
 
 export interface LandingHeroContentProps {
+  className?: string;
+}
+
+export interface HeroPieceCardProps {
+  piece: LayeredOutfitPiece;
   className?: string;
 }
 

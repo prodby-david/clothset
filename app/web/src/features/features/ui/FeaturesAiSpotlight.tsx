@@ -5,11 +5,11 @@ import { motion } from "motion/react";
 import Badge from "@/shared/components/ui/Badge";
 import type { FeaturesAiSpotlightProps } from "../types/features.types";
 import { SCANNER_STEPS } from "../constants/features.constants";
+import FeaturesAiScannerPreview from "./FeaturesAiScannerPreview";
 
 export default function FeaturesAiSpotlight({
   className = "",
 }: FeaturesAiSpotlightProps) {
-
   return (
     <section className={`py-20 sm:py-28 bg-transparent border-b border-warm-gray ${className}`}>
       <div className="max-w-6xl w-full mx-auto px-4 sm:px-6">
@@ -18,7 +18,7 @@ export default function FeaturesAiSpotlight({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-14"
         >
           <Badge variant="accent" className="mb-3">
             Smart Scanner
@@ -30,6 +30,16 @@ export default function FeaturesAiSpotlight({
             Our smart scanner automatically detects clothing categories, colors, and fabrics
             while keeping your photos completely private.
           </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-12"
+        >
+          <FeaturesAiScannerPreview />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

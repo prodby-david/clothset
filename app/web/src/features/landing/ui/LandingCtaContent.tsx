@@ -9,19 +9,19 @@ import type { LandingCtaContentProps } from "../types/landing-cta.types";
 
 export default function LandingCtaContent({ className = "" }: LandingCtaContentProps) {
   return (
-    <div className={`flex flex-col justify-between ${className}`}>
+    <div className={`flex flex-col justify-between w-full ${className}`}>
       <div>
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pale-sage text-forest dark:text-sage text-xs font-semibold mb-6 shadow-xs">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Get Started in 5 Minutes</span>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal leading-tight">
-          Make getting dressed the easiest part of your morning.
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal leading-tight max-w-3xl">
+          Start your intentional wardrobe today.
         </h2>
 
-        <p className="mt-4 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-xl">
-          Join conscious dressers building intentional digital wardrobes. Organize your garments into dedicated drawers, track your capacity limits, and filter across categories with zero clutter.
+        <p className="mt-4 text-sm sm:text-base md:text-lg text-muted-gray leading-relaxed max-w-2xl">
+          Join conscious dressers curating intentional wardrobes. Keep every piece accounted for, honor mindful capacity limits, and dress with calm certainty every single morning.
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -39,7 +39,7 @@ export default function LandingCtaContent({ className = "" }: LandingCtaContentP
         </div>
       </div>
 
-      <div className="mt-8 pt-6 border-t border-warm-gray flex flex-wrap items-center gap-6 text-xs text-muted-gray">
+      <div className="mt-10 pt-6 border-t border-warm-gray flex flex-wrap items-center gap-6 text-xs text-muted-gray w-full">
         {LANDING_CTA_TRUST_BADGES.map((badge) => {
           const IconComponent = badge.iconName === "shield" ? ShieldCheck : CheckCircle2;
           return (

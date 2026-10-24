@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "motion/react";
 import { LandingCtaProps } from "../types/landing.types";
 import LandingCtaContent from "./LandingCtaContent";
-import WardrobeDrawerPreview from "./WardrobeDrawerPreview";
 
 export default function LandingCta({ className = "" }: LandingCtaProps) {
   return (
@@ -15,10 +14,9 @@ export default function LandingCta({ className = "" }: LandingCtaProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="rounded-3xl border border-warm-gray bg-surface p-8 sm:p-12 lg:p-14 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
+          className="rounded-3xl border border-warm-gray bg-surface p-8 sm:p-12 lg:p-16 shadow-xs w-full"
         >
-          <LandingCtaContent className="lg:col-span-7" />
-          <WardrobeDrawerPreview className="lg:col-span-5" />
+          <LandingCtaContent className="w-full" />
         </motion.div>
       </div>
     </section>

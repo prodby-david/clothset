@@ -28,6 +28,10 @@ export interface HowItWorksDigitizeGuideProps {
   className?: string;
 }
 
+export interface HowItWorksVisualShowcaseProps {
+  className?: string;
+}
+
 export interface HowItWorksViewProps {
   className?: string;
 }

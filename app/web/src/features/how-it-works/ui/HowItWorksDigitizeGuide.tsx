@@ -5,11 +5,11 @@ import { motion } from "motion/react";
 import Badge from "@/shared/components/ui/Badge";
 import type { HowItWorksDigitizeGuideProps } from "../types/how-it-works.types";
 import { DIGITIZE_TIPS } from "../constants/how-it-works.constants";
+import HowItWorksVisualShowcase from "./HowItWorksVisualShowcase";
 
 export default function HowItWorksDigitizeGuide({
   className = "",
 }: HowItWorksDigitizeGuideProps) {
-
   return (
     <section className={`py-20 sm:py-28 bg-transparent border-b border-warm-gray ${className}`}>
       <div className="max-w-6xl w-full mx-auto px-4 sm:px-6">
@@ -18,7 +18,7 @@ export default function HowItWorksDigitizeGuide({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="text-center max-w-2xl mx-auto mb-14"
         >
           <Badge variant="accent" className="mb-3">
             Digitizing Best Practices
@@ -30,6 +30,16 @@ export default function HowItWorksDigitizeGuide({
             Digitizing your clothes is a one-time setup that pays off every single
             morning. Follow these recommendations for fast and accurate photo scanning.
           </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-12"
+        >
+          <HowItWorksVisualShowcase />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -46,7 +56,7 @@ export default function HowItWorksDigitizeGuide({
                   delay: index * 0.08,
                   ease: "easeOut",
                 }}
-                className="rounded-2xl border border-warm-gray bg-cream/30 p-6 flex flex-col justify-between"
+                className="rounded-2xl border border-warm-gray bg-cream/30 dark:bg-[#141a15] p-6 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -66,7 +76,7 @@ export default function HowItWorksDigitizeGuide({
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-warm-gray flex items-center gap-1.5 text-xs text-charcoal font-medium">
+                <div className="mt-6 pt-4 border-t border-warm-gray flex items-center gap-1.5 text-xs text-charcoal dark:text-cream font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-sage shrink-0" />
                   <span className="truncate">{item.tip}</span>
                 </div>

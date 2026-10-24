@@ -4,7 +4,7 @@ import type { WardrobeTemplateItem } from "@/features/closets/types/closet.types
 import { getAdminTokenFromCookies } from "../lib/admin-cookies";
 
 export const adminApiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

@@ -8,6 +8,10 @@ export interface FeaturesAiSpotlightProps {
   className?: string;
 }
 
+export interface FeaturesAiScannerPreviewProps {
+  className?: string;
+}
+
 export interface FeaturesCapsuleComparisonProps {
   className?: string;
 }
