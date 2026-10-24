@@ -2,12 +2,15 @@
   "name": "@clothset/shared-schemas",
   "version": "1.0.0",
   "description": "Shared Zod schemas and TypeScript contracts for Clothset",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "type": "module",
+  "exports": {
+    "./admin.schema": "./src/admin.schema.ts",
+    "./closet.schema": "./src/closet.schema.ts",
+    "./clothing.schema": "./src/clothing.schema.ts",
+    "./outfit.schema": "./src/outfit.schema.ts",
+    "./user.schema": "./src/user.schema.ts",
+    "./*": "./src/*.ts"
+  },
   "dependencies": {
     "zod": "^4.6.7"
   }
